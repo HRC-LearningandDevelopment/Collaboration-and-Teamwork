@@ -12,6 +12,7 @@
       {
         title: "Safe to speak, fail, and ask",
         blocks: [
+          { type: "figure", src: "img/illustrations/huddle.svg", alt: "A team huddles around a table, speaking up" },
           { type: "p", html: "People collaborate when they feel safe. Google's Project Aristotle studied 180 teams and found that psychological safety mattered more than who was on the team. Amy Edmondson, who coined the term, describes it as a shared belief that the team is safe for interpersonal risk-taking." },
           { type: "p", html: "On your team, that means people feel safe to:" },
           SH.safetyConcepts,
@@ -28,26 +29,27 @@
       {
         title: "Safe or shut down?",
         blocks: [
-          { type: "p", html: "Here are four everyday moments from your week. For each one, choose the response that builds safety. If you pick a weaker one, you'll see how it lands, and you can try again." },
+          { type: "media", src: "img/photos/video-call.webp", shape: "circle", alt: "A laptop showing a video call with a grid of colleagues", html: "Here are four everyday moments from your week. For each one, choose the response that builds safety. If you pick a weaker one, you'll see how it lands, and you can try again." },
           V({
             ops: { type: "sim", id: "tl1-sim", title: "Four moments on the floor",
               setup: "Month-end week. The team is behind, everyone is tired, and every reaction you have is being watched.",
               steps: [
                 { label: "An error", context: "Carlo messages you: “I think I posted 20 payments to the wrong account.”", options: [
-                  { text: "“How did that happen? You know the SOP.”", correct: false, feedback: "It feels natural under pressure, but it teaches people to hide errors. Next time, you hear about it from QA or the client instead of from Carlo." },
-                  { text: "“Fix it quietly before QA sees it.”", correct: false, feedback: "Hiding it from QA teaches the whole team that errors are to be concealed, and QA may need to check whether the same cause affects other accounts." },
-                  { text: "“Thanks for flagging it fast. Let's fix it, then look at what tripped you up.”", correct: true, feedback: "Thanking him for speaking up makes early reporting the norm. Looking at the cause, not the person, is how you stop it happening again." } ] },
+                  { text: "“How did that happen? You know the SOP by now.”", correct: false, feedback: "It feels natural under pressure, but it teaches people to hide errors. Next time, you hear about it from QA or the client instead of from Carlo." },
+                  { text: "“Let's fix it quietly before QA picks it up.”", correct: false, feedback: "Hiding it from QA teaches the whole team that errors are to be concealed, and QA may need to check whether the same cause affects other accounts." },
+                  { text: "“Thanks for telling me fast. Let's fix it together.”", correct: true, feedback: "Thanking him for speaking up makes early reporting the norm. Looking at the cause, not the person, is how you stop it happening again." } ] },
                 { label: "A question", context: "In the huddle, Bea, two months in, asks why today's target is so high.", options: [
                   { text: "“Good question. What makes you ask?”", correct: true, feedback: "Inviting the question shows challenge is welcome. Bea explains that new agents don't know the payer shortcuts yet, which is useful for planning the day." },
                   { text: "“The target comes from the client, so it's not up for debate.”", correct: false, feedback: "Possibly true, but it closes the door. Hear her first, then explain the why." },
                   { text: "“Let's not get into that now.”", correct: false, feedback: "Shutting it down tells everyone questions are unwelcome. The concern doesn't disappear; it goes underground." } ] },
                 { label: "A third ask", context: "Bea asks for help with the same denial type for the third time this week.", options: [
-                  { text: "“I explained this yesterday.”", correct: false, feedback: "Next time she'll guess instead of asking, and errors go up." },
-                  { text: "“Ask Priya. I'm busy.”", correct: false, feedback: "Pairing her with a peer can work, but this brush-off tells her that asking you is a bother." },
-                  { text: "“Let's walk through it once more. Which part is tricky?”", correct: true, feedback: "Patience protects quality and makes asking normal. Finding the tricky part tells you whether she needs a job aid, a buddy, or practice." } ] },
+                  { text: "“I explained this yesterday. Check your notes first.”", correct: false, feedback: "Next time she'll guess instead of asking, and errors go up." },
+                  { text: "“Ask Priya, she knows this denial type best.”", correct: false, feedback: "Pairing her with a peer can work, but sending her elsewhere a third time tells her that asking you is a bother." },
+                  { text: "“Let's go through it once more. Which part is tricky?”", correct: true, feedback: "Patience protects quality and makes asking normal. Finding the tricky part tells you whether she needs a job aid, a buddy, or practice." } ] },
                 { label: "A miss", context: "The team misses its daily target.", options: [
-                  { text: "“What got in our way today, and what do we change tomorrow?”", correct: true, feedback: "Focusing on the system gets honest answers and a real fix: the team tells you the new payer rule is slowing every claim." },
-                  { text: "“Who dropped the ball?”", correct: false, feedback: "Blame makes people defend themselves instead of solving the problem, and the real cause stays hidden." } ] }
+                  { text: "“What got in our way, and what do we change?”", correct: true, feedback: "Focusing on the system gets honest answers and a real fix: the team tells you the new payer rule is slowing every claim." },
+                  { text: "“Whose queue fell behind today, and why?”", correct: false, feedback: "Sounds like analysis, but it hunts for a culprit. People defend themselves, and the real cause stays hidden." },
+                  { text: "“Let's all push a bit harder tomorrow to catch up.”", correct: false, feedback: "Effort wasn't the problem; something got in the way. Pushing harder just repeats it." } ] }
               ],
               key: [
                 "Thank people for bad news. It's the only way you'll keep hearing it early.",
@@ -58,20 +60,21 @@
               setup: "Go-live week. The team is stretched, the list keeps changing, and every reaction you have is being watched.",
               steps: [
                 { label: "An error", context: "Ramon messages you: “I think I gave 12 new hires the wrong access profile.”", options: [
-                  { text: "“How did that happen? You know the process.”", correct: false, feedback: "It feels natural under pressure, but it teaches people to hide errors. Next time, you hear about it from Training or an angry Ops manager instead of from Ramon." },
-                  { text: "“Fix it quietly before HR or Training notices.”", correct: false, feedback: "Hiding it teaches the team that errors are to be concealed, and the wrong profile could be an access-control issue that others need to know about." },
-                  { text: "“Thanks for flagging it fast. Let's fix it, then look at what tripped you up.”", correct: true, feedback: "Thanking him for speaking up makes early reporting the norm. Looking at the cause, not the person, is how you stop it happening again." } ] },
+                  { text: "“How did that happen? You know the process by now.”", correct: false, feedback: "It feels natural under pressure, but it teaches people to hide errors. Next time, you hear about it from Training or an angry Ops manager instead of from Ramon." },
+                  { text: "“Let's fix it quietly before HR or Training notice.”", correct: false, feedback: "Hiding it teaches the team that errors are to be concealed, and the wrong profile could be an access-control issue that others need to know about." },
+                  { text: "“Thanks for telling me fast. Let's fix it together.”", correct: true, feedback: "Thanking him for speaking up makes early reporting the norm. Looking at the cause, not the person, is how you stop it happening again." } ] },
                 { label: "A question", context: "At stand-up, Lia, one month in, asks why the ticket SLA is so tight during go-live.", options: [
                   { text: "“Good question. What makes you ask?”", correct: true, feedback: "Inviting the question shows challenge is welcome. Lia explains that new-client tickets need extra checks she doesn't know yet, which is useful for planning the day." },
                   { text: "“The SLA is set by leadership, so it's not up for debate.”", correct: false, feedback: "Possibly true, but it closes the door. Hear her first, then explain the why." },
                   { text: "“Let's not get into that now.”", correct: false, feedback: "Shutting it down tells everyone questions are unwelcome. The concern doesn't disappear; it goes underground." } ] },
                 { label: "A third ask", context: "Lia asks for help with the same access-profile setup for the third time this week.", options: [
-                  { text: "“I explained this yesterday.”", correct: false, feedback: "Next time she'll guess instead of asking, and wrong profiles go up." },
-                  { text: "“Ask Ana. I'm busy.”", correct: false, feedback: "Pairing her with a peer can work, but this brush-off tells her that asking you is a bother." },
-                  { text: "“Let's walk through it once more. Which part is tricky?”", correct: true, feedback: "Patience protects quality and makes asking normal. Finding the tricky part tells you whether she needs a job aid, a buddy, or practice." } ] },
+                  { text: "“I explained this yesterday. Check your notes first.”", correct: false, feedback: "Next time she'll guess instead of asking, and wrong profiles go up." },
+                  { text: "“Ask Ana, she knows these access profiles best.”", correct: false, feedback: "Pairing her with a peer can work, but sending her elsewhere a third time tells her that asking you is a bother." },
+                  { text: "“Let's go through it once more. Which part is tricky?”", correct: true, feedback: "Patience protects quality and makes asking normal. Finding the tricky part tells you whether she needs a job aid, a buddy, or practice." } ] },
                 { label: "A miss", context: "The team misses its daily ticket target.", options: [
-                  { text: "“What got in our way today, and what do we change tomorrow?”", correct: true, feedback: "Focusing on the system gets honest answers and a real fix: the team tells you late list changes are forcing rework on finished tickets." },
-                  { text: "“Who dropped the ball?”", correct: false, feedback: "Blame makes people defend themselves instead of solving the problem, and the real cause stays hidden." } ] }
+                  { text: "“What got in our way, and what do we change?”", correct: true, feedback: "Focusing on the system gets honest answers and a real fix: the team tells you late list changes are forcing rework on finished tickets." },
+                  { text: "“Whose tickets fell behind today, and why?”", correct: false, feedback: "Sounds like analysis, but it hunts for a culprit. People defend themselves, and the real cause stays hidden." },
+                  { text: "“Let's all push a bit harder tomorrow to catch up.”", correct: false, feedback: "Effort wasn't the problem; something got in the way. Pushing harder just repeats it." } ] }
               ],
               key: [
                 "Thank people for bad news. It's the only way you'll keep hearing it early.",
@@ -128,6 +131,7 @@
       {
         title: "Five ways to respond",
         blocks: [
+          { type: "figure", src: "img/illustrations/conflict.svg", alt: "Two colleagues face each other while a DIAL gauge turns toward calm" },
           { type: "p", html: SH.modesIntro },
           { type: "flip", id: "tl2-modes", title: "The five conflict modes",
             cards: [
@@ -170,7 +174,7 @@
       {
         title: "DIAL: turning down the heat",
         blocks: [
-          { type: "p", html: "When a conflict is worth addressing, use four steps in order. Attack the problem, not the person." },
+          { type: "media", src: "img/photos/frustrated.webp", shape: "circle", alt: "A frustrated professional gestures at his laptop", html: "When a conflict is worth addressing, use four steps in order. Attack the problem, not the person." },
           SH.dialConcepts,
           { type: "sequence", id: "tl2-dial", title: "Rearrange the conversation",
             prompt: V({ ops: "Marco, your ATL, has sent the shift report late three times this week, and you've had to chase it each time. Drag these four lines into DIAL order.", sup: "Paolo, your ATL, has sent the daily status report late three times this week, and you've had to chase it each time. Drag these four lines into DIAL order." }),
@@ -223,7 +227,8 @@
       {
         title: "From my numbers to our numbers",
         blocks: [
-          { type: "p", html: V({ ops: "In our teams, one person's backlog becomes everyone's SLA problem. The best TLs make helping normal and asking for help easy.", sup: "In support teams, one person's backlog becomes an Operations problem by Monday. The best TLs make helping normal and asking for help easy." }) },
+          { type: "figure", src: "img/illustrations/support.svg", alt: "Colleagues pass work along toward a shared goal" },
+          { type: "media", src: "img/photos/helping.webp", shape: "circle", alt: "One colleague leans in to help another at her laptop", html: V({ ops: "In our teams, one person's backlog becomes everyone's SLA problem. The best TLs make helping normal and asking for help easy.", sup: "In support teams, one person's backlog becomes an Operations problem by Monday. The best TLs make helping normal and asking for help easy." }) },
           { type: "compare", cols: [
             { title: "A “my numbers” team", items: V({ ops: ["“I hit my target, so it's not my problem.”", "Shortcuts and know-how kept to yourself", "People help only when the TL asks"], sup: ["“My tickets are closed, so it's not my problem.”", "Templates and fixes kept to yourself", "People help only when the TL asks"] }) },
             { title: "An “our numbers” team", items: V({ ops: ["“We hit target when everyone does.”", "Faster agents coach and help slower ones", "People offer before being asked"], sup: ["“We go live when every account is ready.”", "Templates and fixes shared the same day", "People offer before being asked"] }) } ] },
@@ -268,7 +273,8 @@
       {
         title: "Three networks every leader needs",
         blocks: [
-          { type: "p", html: "No team succeeds alone. Research on leadership networks by Herminia Ibarra describes three kinds every leader needs. Most new leaders have a strong operational network and weak developmental and strategic ones." },
+          { type: "figure", src: "img/illustrations/network.svg", alt: "A leader at the center of operational, developmental, and strategic networks" },
+          { type: "media", src: "img/photos/handshake.webp", shape: "portrait", alt: "Two colleagues shake hands and smile", html: "No team succeeds alone. Research on leadership networks by Herminia Ibarra describes three kinds every leader needs. Most new leaders have a strong operational network and weak developmental and strategic ones." },
           { type: "concepts", items: V({
             ops: [
               { title: "Operational", tag: "Who helps me get today's work done?", text: "QA, MIS, Trainers, WFM, peer TLs, and ATLs." },
@@ -337,6 +343,7 @@
       {
         title: V({ ops: "Month-end crunch", sup: "Go-live countdown" }),
         blocks: [
+          { type: "figure", src: "img/illustrations/capstone.svg", alt: "A team climbs rising steps toward a flag" },
           { type: "p", html: "Everything you've practiced comes together in one huddle. Make a choice at each moment and see how it lands with the people in the room." },
           V({
             ops: { type: "sim", id: "tl5-sim", title: "The month-end huddle",
@@ -344,24 +351,24 @@
               steps: [
                 { label: "Open", context: "Everyone's waiting. What do you say first?", options: [
                   { text: "“We're 1,200 behind. Everyone pushes harder today, no breaks.”", correct: false, feedback: "Pressure without input. People nod, and nobody raises what's actually in the way." },
-                  { text: "“We're 1,200 behind with two days to go. I need everyone's ideas. What's getting in our way?”", correct: true, feedback: "You framed the problem and invited input. People start sharing real blockers, starting with the payer rule change." },
+                  { text: "“We're 1,200 behind. What's getting in our way?”", correct: true, feedback: "You framed the problem and invited input. People start sharing real blockers, starting with the payer rule change." },
                   { text: "“Joy, can we skip calibration so we can focus on volume?”", correct: false, feedback: "You jumped to a solution and put QA on the defensive before hearing anyone." } ] },
                 { label: "Carlo", context: "Carlo says: “I'm doing more than everyone, and nobody notices.”", options: [
-                  { text: "“Let's not make this about you right now.”", correct: false, feedback: "He goes quiet, and his effort drops for the rest of the week." },
-                  { text: "“Everyone's busy. We all have to manage.”", correct: false, feedback: "True, but dismissive. He feels unseen." },
-                  { text: "“You've been carrying a lot, and I see it. What would make the workload feel fairer?”", correct: true, feedback: "Acknowledging him and asking turns a complaint into an idea: he suggests splitting the hardest payer's claims across the whole team." } ] },
+                  { text: "“Let's not make this about you right now, Carlo.”", correct: false, feedback: "He goes quiet, and his effort drops for the rest of the week." },
+                  { text: "“Everyone's busy this week. We all have to manage.”", correct: false, feedback: "True, but dismissive. He feels unseen." },
+                  { text: "“I see it. What would make the load feel fairer?”", correct: true, feedback: "Acknowledging him and asking turns a complaint into an idea: he suggests splitting the hardest payer's claims across the whole team." } ] },
                 { label: "QA", context: "Joy insists on recalibration today.", options: [
-                  { text: "“Could we do a focused 20-minute calibration on the top two error types right now?”", correct: true, feedback: "A collaborative middle ground: QA gets the fix at the source, and you protect capacity." },
-                  { text: "“Volume comes first. We'll do it after month-end.”", correct: false, feedback: "Competing here risks errors reaching the client, and damages trust with QA." },
-                  { text: "“Fine, let's do the full two-hour session.”", correct: false, feedback: "Accommodating builds goodwill with QA but costs the backlog. There's a better option that works for both." } ] },
+                  { text: "“Could we do 20 minutes now, on the top two errors?”", correct: true, feedback: "A collaborative middle ground: QA gets the fix at the source, and you protect capacity." },
+                  { text: "“Volume comes first. We'll calibrate after month-end.”", correct: false, feedback: "Competing here risks errors reaching the client, and damages trust with QA." },
+                  { text: "“Fine, let's do the full two-hour session now.”", correct: false, feedback: "Accommodating builds goodwill with QA but costs the backlog. There's a better option that works for both." } ] },
                 { label: "Asha", context: "Asha offers three agents if your SME helps her team next week.", options: [
-                  { text: "“Thanks, but we'll manage ourselves.”", correct: false, feedback: "Pride over the goal. You turned down help that was right there." },
-                  { text: "“Great, send whoever's free.”", correct: false, feedback: "Accepting is right, but vague terms lead to confusion later." },
-                  { text: "“Yes. Can your three take the payer A queue from 2 to 6pm? My SME will block Tuesday morning for your team.”", correct: true, feedback: "A specific ask and a specific offer. Your network just added capacity." } ] },
+                  { text: "“Thanks, Asha, but we should manage this one ourselves.”", correct: false, feedback: "Pride over the goal. You turned down help that was right there." },
+                  { text: "“Great, send whoever's free and we'll find work for them.”", correct: false, feedback: "Accepting is right, but vague terms lead to confusion later." },
+                  { text: "“Yes: payer A queue, 2 to 6pm. My SME is yours Tuesday.”", correct: true, feedback: "A specific ask and a specific offer. Your network just added capacity." } ] },
                 { label: "Close", context: "How do you close the huddle?", options: [
-                  { text: "“Okay, let's get going.”", correct: false, feedback: "People leave unsure of the plan, and nobody feels thanked." },
-                  { text: "Recap the plan and owners, then thank each person for what they brought: Carlo's idea, Joy's flexibility, Asha's help.", correct: true, feedback: "Everyone leaves knowing the plan, and knowing their contribution mattered." },
-                  { text: "“I'll email the plan later.”", correct: false, feedback: "The plan arrives, but the moment to recognize people has passed." } ] }
+                  { text: "“Okay, we have a plan. Let's get going, everyone.”", correct: false, feedback: "People leave unsure of the plan, and nobody feels thanked." },
+                  { text: "Recap owners, and thank each person for their part", correct: true, feedback: "Name what each person brought: Carlo's idea, Joy's flexibility, Asha's help. Everyone leaves knowing the plan, and that their contribution mattered." },
+                  { text: "“I'll email the plan to everyone later today.”", correct: false, feedback: "The plan arrives, but the moment to recognize people has passed." } ] }
               ],
               key: [
                 "No single person could have solved this. The plan came from everyone, including the person who was frustrated.",
@@ -372,25 +379,25 @@
               setup: "Two days to go-live, and 35 of 80 access requests are still open. HR's list just changed again: nine new names, four removed. Training needs every account tested by Friday noon. Ramon says he's doing more than everyone else and is fed up. Kevin's team finished its prep early. Your goal: every new hire ready for Monday, without burning out the team. You call a quick stand-up with Ramon, Ana, Rina from HR, and Kevin.",
               steps: [
                 { label: "Open", context: "Everyone's waiting. What do you say first?", options: [
-                  { text: "“We have 35 open requests and two days. I need everyone's ideas. What's getting in our way?”", correct: true, feedback: "You framed the problem and invited input. People start sharing real blockers, starting with the late list changes." },
+                  { text: "“35 requests open, two days left. What's in our way?”", correct: true, feedback: "You framed the problem and invited input. People start sharing real blockers, starting with the late list changes." },
                   { text: "“We're 35 behind. Everyone pushes, no breaks until it's done.”", correct: false, feedback: "Pressure without input. People nod, and nobody raises what's actually in the way." },
                   { text: "“Rina, can HR please stop changing the list so we can catch up?”", correct: false, feedback: "You jumped to blame before hearing anyone, and put HR on the defensive." } ] },
                 { label: "Ramon", context: "Ramon says: “I'm doing more than everyone, and nobody notices.”", options: [
-                  { text: "“Everyone's busy. We all have to manage.”", correct: false, feedback: "True, but dismissive. He feels unseen." },
-                  { text: "“You've been carrying a lot, and I see it. What would make the workload feel fairer?”", correct: true, feedback: "Acknowledging him and asking turns a complaint into an idea: he suggests batching requests by access profile so everyone works one type at a time." },
-                  { text: "“Let's not make this about you right now.”", correct: false, feedback: "He goes quiet, and his effort drops for the rest of the week." } ] },
+                  { text: "“Everyone's busy this week. We all have to manage.”", correct: false, feedback: "True, but dismissive. He feels unseen." },
+                  { text: "“I see it. What would make the load feel fairer?”", correct: true, feedback: "Acknowledging him and asking turns a complaint into an idea: he suggests batching requests by access profile so everyone works one type at a time." },
+                  { text: "“Let's not make this about you right now, Ramon.”", correct: false, feedback: "He goes quiet, and his effort drops for the rest of the week." } ] },
                 { label: "HR", context: "Rina says: “Operations keeps sending me changes. I can't freeze the list.”", options: [
-                  { text: "“Then we can't promise Monday.”", correct: false, feedback: "Competing here pushes the problem back to HR, and the new hires lose either way." },
-                  { text: "“Fine, send changes whenever. We'll cope.”", correct: false, feedback: "Accommodating builds goodwill with HR, but your team pays with rework all weekend. There's a better option." },
-                  { text: "“Could we agree one daily cut-off, say 2pm, with anything later going into a Tuesday batch?”", correct: true, feedback: "A collaborative fix: HR keeps flexibility, and your team gets a stable list to work from." } ] },
+                  { text: "“Then we can't promise Monday's go-live for anyone.”", correct: false, feedback: "Competing here pushes the problem back to HR, and the new hires lose either way." },
+                  { text: "“Fine, send changes whenever. We'll absorb them.”", correct: false, feedback: "Accommodating builds goodwill with HR, but your team pays with rework all weekend. There's a better option." },
+                  { text: "“Could we set one 2pm daily cut-off for changes?”", correct: true, feedback: "A collaborative fix: HR keeps flexibility, and your team gets a stable list to work from." } ] },
                 { label: "Kevin", context: "Kevin offers two testers if your team sets up access for his trainers next week.", options: [
-                  { text: "“Yes. Can your two test the 40 accounts in batch A from 2 to 6pm? Ana will set up your trainers' access on Tuesday morning.”", correct: true, feedback: "A specific ask and a specific offer. Your network just added capacity." },
-                  { text: "“Thanks, but we'll manage ourselves.”", correct: false, feedback: "Pride over the goal. You turned down help that was right there." },
-                  { text: "“Great, send whoever's free.”", correct: false, feedback: "Accepting is right, but vague terms lead to confusion later." } ] },
+                  { text: "“Yes: batch A, 2 to 6pm. Ana helps your trainers Tuesday.”", correct: true, feedback: "A specific ask and a specific offer. Your network just added capacity." },
+                  { text: "“Thanks, Kevin, but we should manage this one ourselves.”", correct: false, feedback: "Pride over the goal. You turned down help that was right there." },
+                  { text: "“Great, send whoever's free and we'll find work for them.”", correct: false, feedback: "Accepting is right, but vague terms lead to confusion later." } ] },
                 { label: "Close", context: "How do you close the stand-up?", options: [
-                  { text: "“I'll email the plan later.”", correct: false, feedback: "The plan arrives, but the moment to recognize people has passed." },
-                  { text: "“Okay, let's get going.”", correct: false, feedback: "People leave unsure of the plan, and nobody feels thanked." },
-                  { text: "Recap the plan and owners, then thank each person for what they brought: Ramon's batching idea, Rina's cut-off, Kevin's testers.", correct: true, feedback: "Everyone leaves knowing the plan, and knowing their contribution mattered." } ] }
+                  { text: "“I'll email the plan to everyone later today.”", correct: false, feedback: "The plan arrives, but the moment to recognize people has passed." },
+                  { text: "“Okay, we have a plan. Let's get going, everyone.”", correct: false, feedback: "People leave unsure of the plan, and nobody feels thanked." },
+                  { text: "Recap owners, and thank each person for their part", correct: true, feedback: "Name what each person brought: Ramon's batching idea, Rina's cut-off, Kevin's testers. Everyone leaves knowing the plan, and that their contribution mattered." } ] }
               ],
               key: [
                 "No single person could have solved this. The plan came from everyone, including the person who was frustrated.",
@@ -406,21 +413,21 @@
           { type: "jeopardy", id: "tl5-game", title: "Collaboration quiz board",
             cats: [
               { name: "Safe to speak", clues: [
-                { v: 100, q: "Which response makes it most likely people will report their errors early?", options: ["“How did that happen?”", "“Thanks for flagging it. Let's fix it together.”", "“Make sure it doesn't happen again.”"], answer: 1, explain: "Thanking people for bad news is how you keep hearing it early." },
+                { v: 100, q: "Which response makes it most likely people will report their errors early?", options: ["“How did that happen? Walk me through it.”", "“Thanks for flagging it. Let's fix it.”", "“Okay. Make sure it doesn't happen again.”"], answer: 1, explain: "Thanking people for bad news is how you keep hearing it early." },
                 { v: 200, q: "Google's Project Aristotle found which factor mattered most in high-performing teams?", options: ["Individual talent", "Psychological safety", "Clear job descriptions"], answer: 1, explain: "How safe people felt mattered more than who was on the team." },
-                { v: 300, q: "You ask “Any questions?” and nobody answers. What's the best next move?", options: ["Move on; silence means agreement", "Call on the newest person", "Ask “What am I missing?” and wait a few seconds"], answer: 2, explain: "Silence is usually people deciding whether it's safe. A real question plus a real pause helps them decide." } ] },
+                { v: 300, q: "You ask “Any questions?” and nobody answers. What's the best next move?", options: ["Move on; silence usually means agreement", "Call on the newest person to answer", "Ask “What am I missing?” and wait"], answer: 2, explain: "Silence is usually people deciding whether it's safe. A real question plus a real pause helps them decide." } ] },
               { name: "Conflict", clues: [
                 { v: 100, q: V({ ops: "An agent skips a compliance step to save time. Which mode fits?", sup: "Someone grants access before approval to save time. Which mode fits?" }), options: ["Compromising", "Competing", "Accommodating"], answer: 1, explain: "Non-negotiables call for standing firm, and explaining why." },
                 { v: 200, q: "In DIAL, what does the A stand for?", options: ["Agree", "Assess the risk", "Ask for their view"], answer: 2, explain: "Ask, then listen. It's the step most people skip." },
-                { v: 300, q: "Two people snap at each other over something trivial five minutes before shift end. Which mode fits?", options: ["Avoiding for now, then check in tomorrow", "Competing", "Collaborating right now"], answer: 0, explain: "Avoiding is a pause, not a decision. Come back when people are calm." } ] },
+                { v: 300, q: "Two people snap at each other over something trivial five minutes before shift end. Which mode fits?", options: ["Avoiding for now, then a check-in tomorrow", "Competing, to stop it in front of the team", "Collaborating, with both of them right now"], answer: 0, explain: "Avoiding is a pause, not a decision. Come back when people are calm." } ] },
               { name: "Helping", clues: [
-                { v: 100, q: "Which offer is most likely to be accepted?", options: ["“Let me know if you need anything.”", V({ ops: "“I can take 30 claims from your queue this afternoon.”", sup: "“I can test 15 accounts for you this afternoon.”" }), "“I'm always happy to help.”"], answer: 1, explain: "Specific offers name what, how much, and when." },
+                { v: 100, q: "Which offer is most likely to be accepted?", options: ["“Let me know if you need anything at all.”", V({ ops: "“I can take 30 claims this afternoon.”", sup: "“I can test 15 accounts this afternoon.”" }), "“Happy to help once my own queue clears.”"], answer: 1, explain: "Specific offers name what, how much, and when." },
                 { v: 200, q: "When is the best time to ask for help with a growing backlog?", options: ["When it first starts building", "Only when you'll miss the deadline", "Afterwards, to avoid bothering anyone"], answer: 0, explain: "Asking early is cheap. Asking at the deadline is expensive for everyone." },
-                { v: 300, q: "The helping habit is ask early, offer specifically, and…", options: ["escalate quickly", "follow through and close the loop", "keep track of who owes you"], answer: 1, explain: "Following through is what makes your next offer believable." } ] },
+                { v: 300, q: "The helping habit is ask early, offer specifically, and…", options: ["escalate early if it slips", "follow through and close the loop", "keep a note of who owes you"], answer: 1, explain: "Following through is what makes your next offer believable." } ] },
               { name: "Networks", clues: [
                 { v: 100, q: "Which network helps you see what's coming?", options: ["Operational", "Developmental", "Strategic"], answer: 2, explain: "Strategic contacts help you see beyond today's work." },
                 { v: 200, q: "Your mentor belongs mainly in which network?", options: ["Developmental", "Operational", "Strategic"], answer: 0, explain: "Developmental contacts help you grow as a leader." },
-                { v: 300, q: "What's the best way to start a new relationship in your network?", options: ["Ask for a favour", "Wait until you need them", "Offer something first: knowledge, credit, or help"], answer: 2, explain: "Give before you ask. It makes the first conversation easy." } ] }
+                { v: 300, q: "What's the best way to start a new relationship in your network?", options: ["Ask them for a small favour first", "Wait until you have a real need", "Offer something first: credit or help"], answer: 2, explain: "Give before you ask. It makes the first conversation easy." } ] }
             ] }
         ]
       },
@@ -430,7 +437,7 @@
           { type: "puzzle", caption: "A team with a piece missing isn't complete." },
           { type: "p", html: "Remember the missing line at the start? The story jumped from problem to solution because someone's contribution was gone." },
           { type: "p", html: V({ ops: "Think about the huddle you just led: the plan only came together because each person brought something. Your team needs your style, your know-how, and your voice in the huddle. When you hold back, the team is incomplete.", sup: "Think about the stand-up you just led: the plan only came together because each person brought something. Your team needs your style, your know-how, and your voice at stand-up. When you hold back, the team is incomplete." }) },
-          { type: "p", html: "<strong>That piece is you. And the people around you need to hear that they matter too.</strong>" },
+          { type: "media", src: "img/photos/thumbs-up.webp", shape: "circle", alt: "A row of hands giving a thumbs-up", html: "<strong>That piece is you. And the people around you need to hear that they matter too.</strong>" },
           { type: "appreciate", id: "tl5-appr", title: "Say it to someone",
             prompt: "Write a short message to one person on your real team. Then send it today, in your own words.",
             label: "Your message, for example: “[Name], the team is better because you…”" }

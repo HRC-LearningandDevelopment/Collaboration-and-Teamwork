@@ -6,11 +6,12 @@
   {
     id: "f1", part: "foundation", track: "all", minutes: 9,
     title: "Every piece matters",
-    summary: "Meet your scenario, find the missing line in a team story, and discover the words that hold a team together.",
+    summary: V({ tl: "Meet your scenario, find the missing line in a team story, and discover the words that hold a team together.", mgr: "Meet your scenario, find the missing line in a team story, and work out where collaboration broke down in a real-world case." }),
     screens: [
       {
         title: "Meet your scenario",
         blocks: [
+          { type: "figure", src: "img/illustrations/team-pieces.svg", alt: "Five team members stand in front of brand-colored panels; a sixth panel labeled You is still empty" },
           { type: "p", html: V({
             tl: "Everything in this course is built around one demanding week with your team, and the people you'll lead through it. You'll meet them again and again.",
             mgr: "Everything in this course is built around one escalation you're part of, and the leaders and partners you'll need to solve it. You'll meet them again and again." }) },
@@ -46,10 +47,12 @@
         ]
       },
       {
-        title: "What holds a team together",
+        title: V({ tl: "What holds a team together", mgr: "Case: the signal nobody shared" }),
         blocks: [
-          { type: "p", html: "Eight words are hidden in the grid. Each one is part of what makes a team work. As you find each word, you'll see why it matters." },
-          { type: "wordsearch", id: "f1-words", title: "Find the eight words", size: 11,
+          { type: "p", only: "mgr", html: "At your level, collaboration rarely breaks inside one team. It breaks between teams, functions, and leaders. Here's how that usually happens." },
+          window.CT_CASES.signal,
+          { type: "p", only: "tl", html: "Eight words are hidden in the grid. Each one is part of what makes a team work. As you find each word, you'll see why it matters." },
+          { type: "wordsearch", only: "tl", id: "f1-words", title: "Find the eight words", size: 11,
             words: [
               { w: "TRUST", note: "The foundation. People share problems and ideas only with people they trust." },
               { w: "SAFETY", note: "Psychological safety: it's safe to speak up, admit mistakes, and ask for help." },
@@ -60,7 +63,7 @@
               { w: "NETWORK", note: "The people beyond your team who help you deliver, grow, and see what's coming." },
               { w: "GOAL", note: "A shared goal turns “my numbers” into “our numbers.”" }
             ] },
-          { type: "p", html: "In Part 2 you'll practice four skills that bring these words to life. Open each one for a preview." },
+          { type: "p", html: V({ tl: "In Part 2 you'll practice four skills that bring these words to life. Open each one for a preview.", mgr: "In Part 2 you'll practice four skills that would have caught this in week 2. Open each one for a preview." }) },
           { type: "accordion", id: "f1-skills", items: [
             { title: "Promote a collaborative environment", html: V({ tl: "<p>Make it safe for your team to speak up, admit mistakes, and ask for help, starting with how you respond in your next huddle.</p>", mgr: "<p>Make it safe for your TLs and peers to bring bad news early, and break down the silos between teams and functions.</p>" }) },
             { title: "Manage conflict constructively", html: "<p>Choose the right response for the moment from five conflict modes, and use DIAL to turn down the heat without avoiding the issue.</p>" },
@@ -80,7 +83,8 @@
       {
         title: "Your team-player style",
         blocks: [
-          { type: "p", html: "Teams need four kinds of contribution. Before you learn what they are, find out which ones come most naturally to you." },
+          { type: "figure", src: "img/illustrations/styles.svg", alt: "Four people, each with a symbol for a team-player style" },
+          { type: "media", src: "img/photos/thinking.webp", shape: "cutout", alt: "A man pauses to think, finger to his temple", html: "Teams need four kinds of contribution. Before you learn what they are, find out which ones come most naturally to you." },
           { type: "styleassess", id: "f2-style", title: "Team-player self-assessment",
             intro: "For each statement, choose the option most like you on a normal workday, not on your best day. Every option describes something teams need, so none is better than the others. Your answers stay in this browser.",
             items: [
@@ -146,10 +150,11 @@
         ]
       },
       {
-        title: "Hear the styles in action",
+        title: V({ tl: "Hear the styles in action", mgr: "Case: staff the task force" }),
         blocks: [
-          { type: "p", html: "You'll hear all four styles in any good huddle. Sort each comment into the style it shows. Some comments could sound like more than one; choose the best fit." },
-          { type: "bucket", id: "f2-sort", title: "Who's speaking?",
+          window.CT_CASES.taskforce,
+          { type: "p", only: "tl", html: "You'll hear all four styles in any good huddle. Sort each comment into the style it shows. Some comments could sound like more than one; choose the best fit." },
+          { type: "bucket", only: "tl", id: "f2-sort", title: "Who's speaking?",
             prompt: V({ ops: "Comments from a month-end huddle.", sup: "Comments from a go-live stand-up." }),
             buckets: [ { id: "con", label: "Contributor" }, { id: "col", label: "Collaborator" }, { id: "com", label: "Communicator" }, { id: "cha", label: "Challenger" } ],
             items: V({

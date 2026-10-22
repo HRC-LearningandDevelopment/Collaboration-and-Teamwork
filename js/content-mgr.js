@@ -12,6 +12,7 @@
       {
         title: "Safe to bring bad news",
         blocks: [
+          { type: "figure", src: "img/illustrations/huddle.svg", alt: "A team huddles around a table, speaking up" },
           { type: "p", html: "People collaborate when they feel safe. Google's Project Aristotle studied 180 teams and found that psychological safety mattered more than who was on the team. As a Manager, your reactions set the climate for every team below you. If TLs learn that bad news gets punished, they stop bringing it, and you find out from the client." },
           { type: "p", html: "Across your teams, that means people feel safe to:" },
           SH.safetyConcepts,
@@ -28,23 +29,23 @@
       {
         title: "Silo busting",
         blocks: [
-          { type: "p", html: "Teams that blame each other rarely lack goodwill. They lack a shared goal and a shared routine. For each situation, pick the fix most likely to last." },
+          { type: "media", src: "img/photos/video-call.webp", shape: "circle", alt: "A laptop showing a video call with a grid of colleagues", html: "Teams that blame each other rarely lack goodwill. They lack a shared goal and a shared routine. For each situation, pick the fix most likely to last." },
           V({
             ops: { type: "sim", id: "mg1-sim", title: "Three silos on the account",
               setup: "Your account has five processes and a Quality team. Each looks fine on its own scorecard, but the client keeps finding the gaps between them.",
               steps: [
                 { label: "Ops and Quality", context: "Your TLs and Quality keep arguing about audit errors. Agents say “QA is out to get us.”", options: [
-                  { text: "Escalate each dispute to the Tower Lead", correct: false, feedback: "Escalation settles one dispute and makes the next one more likely." },
-                  { text: "Agree a shared quality goal and a 15-minute weekly joint calibration", correct: true, feedback: "A shared goal plus a regular routine turns opponents into partners." },
-                  { text: "Ask Quality to audit fewer claims", correct: false, feedback: "This hides the problem, and risks errors reaching the client." } ] },
+                  { text: "Escalate disputed audits to the Tower Lead for a ruling", correct: false, feedback: "Settles one dispute and teaches both teams to fight through you. The next dispute arrives sooner." },
+                  { text: "Set one shared accuracy goal and calibrate jointly each week", correct: true, feedback: "A shared goal plus a regular routine turns opponents into partners. Disputes become calibration agenda items." },
+                  { text: "Have Quality explain its audit criteria at your next town hall", correct: false, feedback: "Transparency helps, but it's one-way. Agents still feel judged, and nobody owns the result together." } ] },
                 { label: "Posting and AR", context: "Posting and AR blame each other for unapplied cash.", options: [
-                  { text: "Whichever team caused it fixes it", correct: false, feedback: "Finding the culprit takes longer than fixing the problem, and the blame returns next month." },
-                  { text: "Each team keeps tracking its own KPI", correct: false, feedback: "Separate scorecards keep the blame alive." },
-                  { text: "Set a shared unapplied-cash goal and review it together every week", correct: true, feedback: "When both teams own the same number, they solve it together." } ] },
+                  { text: "Ask MIS to trace which team created each unapplied item", correct: false, feedback: "Forensic, slow, and it keeps the blame alive. You'll have a perfect answer to the wrong question." },
+                  { text: "Move two AR specialists into Posting until it clears", correct: false, feedback: "Adds capacity, but the handoff that caused the problem is unchanged. It comes back when they leave." },
+                  { text: "Give both teams one shared target, reviewed jointly", correct: true, feedback: "When both teams own the same number, they solve it together." } ] },
                 { label: "Late news", context: "Dana tells you about a posting backlog late, after the client has noticed.", options: [
-                  { text: "“Thanks for telling me. Let's fix it, then look at how we spot these earlier.”", correct: true, feedback: "Thanking people for bad news is how you get it early. Then fix the early-warning system together." },
-                  { text: "“Why am I only hearing about this now?”", correct: false, feedback: "Next time, you'll hear about it even later." },
-                  { text: "Raise it in her performance review", correct: false, feedback: "You'll teach every TL to hide problems." } ] }
+                  { text: "Point out, calmly, that you'd rather hear bad news early", correct: false, feedback: "True, and you should say it eventually, but said now it lands as a reprimand. She learns to hide it better." },
+                  { text: "Thank her, fix it, then agree an earlier warning trigger", correct: true, feedback: "Thanking people for bad news is how you get it early. Then fix the early-warning system together." },
+                  { text: "Ask her to send you daily backlog numbers from now on", correct: false, feedback: "Monitoring replaces trust. She'll report numbers, not problems, and you'll still hear the real news late." } ] }
               ],
               key: [
                 "Silos come from separate goals and separate routines, not from bad people.",
@@ -55,17 +56,17 @@
               setup: "HR, IT, Training, and WFM each own a piece of a new hire's first day. Each looks fine on its own scorecard, but Operations keeps finding the gaps between them.",
               steps: [
                 { label: "HR and IT", context: "HR and your team keep arguing about late access. HR says IT is slow; IT says HR's lists are incomplete.", options: [
-                  { text: "Ask HR to send every list two weeks earlier, no exceptions", correct: false, feedback: "A one-sided rule. HR can't control every Operations start date, so it will break, and the blame returns." },
-                  { text: "Escalate each dispute to the Director", correct: false, feedback: "Escalation settles one dispute and makes the next one more likely." },
-                  { text: "Agree a shared goal (every new hire productive on day one) and a 15-minute weekly joint review of the next wave", correct: true, feedback: "A shared goal plus a regular routine turns opponents into partners." } ] },
+                  { text: "Escalate disputed requests to the Director for a ruling", correct: false, feedback: "Settles one dispute and teaches both teams to fight through you. The next dispute arrives sooner." },
+                  { text: "Require HR to send every list two weeks ahead, no exceptions", correct: false, feedback: "A one-sided rule. HR can't control every Operations start date, so it will break, and the blame returns." },
+                  { text: "Set one shared day-one goal and review each wave together", correct: true, feedback: "A shared goal plus a regular routine turns opponents into partners." } ] },
                 { label: "IT and Training", context: "Training and your team blame each other for failed test logins.", options: [
-                  { text: "Set a shared “first-day login success” measure and review it together every week", correct: true, feedback: "When both teams own the same number, they solve it together." },
-                  { text: "Each team keeps tracking its own SLA", correct: false, feedback: "Separate scorecards keep the blame alive." },
-                  { text: "Whichever team caused it fixes it", correct: false, feedback: "Finding the culprit takes longer than fixing the problem." } ] },
+                  { text: "Give both teams one login-success target, reviewed jointly", correct: true, feedback: "When both teams own the same number, they solve it together." },
+                  { text: "Ask IT Security to trace the cause of every failed login", correct: false, feedback: "Forensic, slow, and it keeps the blame alive. You'll have a perfect answer to the wrong question." },
+                  { text: "Lend Training one of your specialists for test days", correct: false, feedback: "Adds capacity, but the handoff that caused the problem is unchanged. It comes back when they leave." } ] },
                 { label: "Late news", context: "Dana tells you that 12 accounts weren't ready, after the Operations Director complained.", options: [
-                  { text: "“Why am I only hearing about this now?”", correct: false, feedback: "Next time, you'll hear about it even later." },
-                  { text: "“Thanks for telling me. Let's fix it, then look at how we spot these earlier.”", correct: true, feedback: "Thanking people for bad news is how you get it early. Then fix the early-warning system together." },
-                  { text: "Raise it in her performance review", correct: false, feedback: "You'll teach every TL to hide problems." } ] }
+                  { text: "Ask her to send you daily readiness numbers from now on", correct: false, feedback: "Monitoring replaces trust. She'll report numbers, not problems, and you'll still hear the real news late." },
+                  { text: "Point out, calmly, that you'd rather hear bad news early", correct: false, feedback: "True, and you should say it eventually, but said now it lands as a reprimand. She learns to hide it better." },
+                  { text: "Thank her, fix it, then agree an earlier warning trigger", correct: true, feedback: "Thanking people for bad news is how you get it early. Then fix the early-warning system together." } ] }
               ],
               key: [
                 "Silos come from separate goals and separate routines, not from bad people.",
@@ -129,6 +130,7 @@
       {
         title: "Five ways to respond",
         blocks: [
+          { type: "figure", src: "img/illustrations/conflict.svg", alt: "Two colleagues face each other while a DIAL gauge turns toward calm" },
           { type: "p", html: SH.modesIntro + " At your level, the conflicts are often between teams, peers, and functions rather than individuals." },
           { type: "flip", id: "mg2-modes", title: "The five conflict modes",
             cards: [
@@ -141,37 +143,16 @@
         ]
       },
       {
-        title: "Which mode fits?",
+        title: "Three conflicts, one afternoon",
         blocks: [
-          { type: "p", html: "Sort each situation into the mode that fits it best. Some situations have more than one good answer; any good fit counts." },
-          { type: "bucket", id: "mg2-sort", title: "Match the mode to the moment",
-            buckets: [ { id: "comp", label: "Competing" }, { id: "coll", label: "Collaborating" }, { id: "prom", label: "Compromising" }, { id: "avoi", label: "Avoiding" }, { id: "acco", label: "Accommodating" } ],
-            items: V({
-              ops: [
-                { id: "a", text: "A TL is bypassing a compliance control to hit targets.", bucket: "comp" },
-                { id: "b", text: "The client wants a mid-quarter SLA change you can't deliver without more people.", bucket: "coll" },
-                { id: "c", text: "Nisha wants to borrow your best TL for her new process launch.", bucket: ["coll", "prom"] },
-                { id: "d", text: "Quality wants a calibration slot that's inconvenient for you but works for three other teams.", bucket: "acco" },
-                { id: "e", text: "Two of your TLs are in a heated email war about who caused an error.", bucket: "avoi" },
-                { id: "f", text: "Two TLs want the same SME on the same day, and both have a fair case.", bucket: "prom" } ],
-              sup: [
-                { id: "a", text: "A TL is skipping access approvals to hit SLA.", bucket: "comp" },
-                { id: "b", text: "Operations wants same-day access for every new hire, but your controls need 48 hours.", bucket: "coll" },
-                { id: "c", text: "Carmela wants to borrow your best TL for HR's system migration.", bucket: ["coll", "prom"] },
-                { id: "d", text: "Training wants a test window that's inconvenient for you but works for three other teams.", bucket: "acco" },
-                { id: "e", text: "Two of your TLs are in a heated email war about who caused an outage.", bucket: "avoi" },
-                { id: "f", text: "Two TLs want the same specialist on the same day, and both have a fair case.", bucket: "prom" } ] }),
-            key: [
-              "Competing is right for non-negotiables. Stand firm, and explain the why.",
-              "Collaborating is worth the time when the answer must work for both sides for months.",
-              "Avoiding a heated exchange is a pause: take it offline, then bring people together."
-            ] }
+          { type: "p", html: "Knowing the five modes is the easy part. The skill is choosing quickly, under pressure, when several conflicts compete for your attention." },
+          window.CT_CASES.afternoon
         ]
       },
       {
         title: "DIAL: turning down the heat",
         blocks: [
-          { type: "p", html: "When a conflict with a peer is worth addressing, use four steps in order. Attack the problem, not the person, and never the team." },
+          { type: "media", src: "img/photos/frustrated.webp", shape: "circle", alt: "A frustrated professional gestures at his laptop", html: "When a conflict with a peer is worth addressing, use four steps in order. Attack the problem, not the person, and never the team." },
           SH.dialConcepts,
           { type: "sequence", id: "mg2-dial", title: "Rearrange the conversation",
             prompt: V({ ops: "Nisha's team keeps sending incomplete handoff files, and your TLs are spending hours on rework. Drag these four lines into DIAL order.", sup: "Carmela's team keeps sending new-hire lists with missing employee IDs, and your TLs are spending hours chasing them. Drag these four lines into DIAL order." }),
@@ -224,7 +205,8 @@
       {
         title: "One account, one team",
         blocks: [
-          { type: "p", html: V({ ops: "Clients don't see your org chart. When one process fails, the whole account fails. The best AMs and Managers win as a leadership team: they share capacity, knowledge, and credit.", sup: "Internal customers don't see your org chart. When one support team fails, the whole service fails. The best Managers win as a leadership team: they share capacity, knowledge, and credit." }) },
+          { type: "figure", src: "img/illustrations/support.svg", alt: "Colleagues pass work along toward a shared goal" },
+          { type: "media", src: "img/photos/helping.webp", shape: "circle", alt: "One colleague leans in to help another at her laptop", html: V({ ops: "Clients don't see your org chart. When one process fails, the whole account fails. The best AMs and Managers win as a leadership team: they share capacity, knowledge, and credit.", sup: "Internal customers don't see your org chart. When one support team fails, the whole service fails. The best Managers win as a leadership team: they share capacity, knowledge, and credit." }) },
           { type: "compare", cols: [
             { title: "A “my numbers” leadership team", items: V({ ops: ["“My process is green, so it's not my problem.”", "Best people and resources guarded", "Peers compete in reviews"], sup: ["“My SLA is green, so it's not my problem.”", "Best people and data guarded", "Peers compete in leadership meetings"] }) },
             { title: "An “our numbers” leadership team", items: V({ ops: ["“The client sees one account, not five teams.”", "Capacity and SMEs shared across teams", "Peers celebrate each other's wins"], sup: ["“Operations sees one service, not four teams.”", "Capacity and specialists shared across teams", "Peers celebrate each other's wins"] }) } ] },
@@ -233,22 +215,9 @@
         ]
       },
       {
-        title: "Connect the dots",
+        title: "When a peer asks for help",
         blocks: [
-          { type: "match", id: "mg3-match", title: "Match each situation to the most helpful move",
-            prompt: "Select a situation on the left, then the move on the right that helps most. A line connects each pair.",
-            left: V({
-              ops: [ { id: "l1", text: "Nisha's process is behind before a client review." }, { id: "l2", text: "Your TLs are struggling with night-shift attrition." }, { id: "l3", text: "Leo's team built a faster cash-matching method." }, { id: "l4", text: "Dana's numbers dipped, and she hasn't asked for help." } ],
-              sup: [ { id: "l1", text: "Carmela's team is behind on the next new-hire list." }, { id: "l2", text: "Your TLs are struggling with weekend coverage." }, { id: "l3", text: "Chris's team built an access checklist that halved rework." }, { id: "l4", text: "Dana's numbers dipped, and she hasn't asked for help." } ] }),
-            right: V({
-              ops: [ { id: "r1", text: "“I can lend two SMEs on Thursday afternoon for your top payer backlog.”" }, { id: "r2", text: "Ask two peer Managers what's worked for them, this week, before it hits the client." }, { id: "r3", text: "Invite Leo to present it at the leadership meeting, and credit his team." }, { id: "r4", text: "Ask her what's getting in the way, and offer one specific support." } ],
-              sup: [ { id: "r1", text: "“Chris can join your list review on Thursday to flag access issues early.”" }, { id: "r2", text: "Ask two peer Managers what's worked for them, this week, before it hits Operations." }, { id: "r3", text: "Invite Chris to present it to HR and Training, and credit his team." }, { id: "r4", text: "Ask her what's getting in the way, and offer one specific support." } ] }),
-            pairs: { l1: "r1", l2: "r2", l3: "r3", l4: "r4" },
-            key: [
-              "Specific offers between peers build trust faster than any team-building event.",
-              "Asking peers early is a strength. Someone may already have solved it.",
-              "Credit given across teams spreads good practice and goodwill."
-            ] },
+          window.CT_CASES.sme,
           { type: "form", id: "mg3-ask", title: "Your ask and your offer",
             fields: [
               { id: "ask", label: "Something I need help with this month", prompt: V({ ops: "For example: a better way to run my weekly business review with the client.", sup: "For example: a better way to report service levels to Operations leaders." }) },
@@ -264,12 +233,13 @@
   {
     id: "mg4", part: "path", track: "mgr", minutes: 13,
     title: "Build networks",
-    summary: "Strengthen the three networks every leader needs, find your gap, and recap all four skills in a crossword.",
+    summary: "Strengthen the three networks every leader needs, find your gap, and decide whose help to ask for first.",
     screens: [
       {
         title: "Three networks every leader needs",
         blocks: [
-          { type: "p", html: "No team succeeds alone. Herminia Ibarra's research on leadership networks describes three kinds every leader needs. As leaders move up, the strategic network matters more, and it's usually the one that's thinnest." },
+          { type: "figure", src: "img/illustrations/network.svg", alt: "A leader at the center of operational, developmental, and strategic networks" },
+          { type: "media", src: "img/photos/handshake.webp", shape: "portrait", alt: "Two colleagues shake hands and smile", html: "No team succeeds alone. Herminia Ibarra's research on leadership networks describes three kinds every leader needs. As leaders move up, the strategic network matters more, and it's usually the one that's thinnest." },
           { type: "concepts", items: V({
             ops: [
               { title: "Operational", tag: "Who helps us deliver today?", text: "Peer AMs and Managers, Quality, MIS, WFM, your HR business partner." },
@@ -279,25 +249,7 @@
               { title: "Operational", tag: "Who helps us deliver today?", text: "Peer Managers in HR, Training, and WFM, Operations TLs, vendors." },
               { title: "Developmental", tag: "Who helps me grow as a leader?", text: "Your mentor, senior leaders, peers in other functions." },
               { title: "Strategic", tag: "Who helps me see what's coming?", text: "Operations Directors, senior leadership, Finance, Solutions, sales and new-client teams." } ] }) },
-          { type: "callout", tone: "rule", title: "Give before you ask", html: "Networks are two-way. Share knowledge, credit others, offer help. The best time to build a relationship is before you need it." },
-          { type: "bucket", id: "mg4-sort", title: "Which network?",
-            prompt: "Sort each person into the network they mainly belong to.",
-            buckets: [ { id: "op", label: "Operational" }, { id: "dev", label: "Developmental" }, { id: "str", label: "Strategic" } ],
-            items: V({
-              ops: [
-                { id: "a", text: "Your HR business partner", bucket: "op" },
-                { id: "b", text: "A senior leader who mentors you quarterly", bucket: "dev" },
-                { id: "c", text: "The client's operations lead", bucket: "str" },
-                { id: "d", text: "Ken, the MIS analyst", bucket: "op" },
-                { id: "e", text: "A Manager in another tower whose style you admire", bucket: "dev" },
-                { id: "f", text: "A Tower Lead planning next year's work", bucket: "str" } ],
-              sup: [
-                { id: "a", text: "Ken, the WFM analyst", bucket: "op" },
-                { id: "b", text: "A senior leader who mentors you quarterly", bucket: "dev" },
-                { id: "c", text: "An Operations Director planning new clients", bucket: "str" },
-                { id: "d", text: "Carmela, your HR onboarding peer", bucket: "op" },
-                { id: "e", text: "A Manager in another function whose style you admire", bucket: "dev" },
-                { id: "f", text: "A Finance leader shaping next year's budget", bucket: "str" } ] }) }
+          { type: "callout", tone: "rule", title: "Give before you ask", html: "Networks are two-way. Share knowledge, credit others, offer help. The best time to build a relationship is before you need it." }
         ]
       },
       {
@@ -320,10 +272,10 @@
         ]
       },
       {
-        title: "Recap: the four skills",
+        title: "Who do you call first?",
         blocks: [
-          { type: "p", html: "Before the capstone, check what's stuck. Every answer comes from this course." },
-          SH.crossword
+          { type: "p", html: "A strong network is only useful if you know which part of it to use. Three situations; you choose the first call." },
+          window.CT_CASES.whocall
         ]
       }
     ]
@@ -333,36 +285,37 @@
   {
     id: "mg5", part: "path", track: "mgr", minutes: 15, capstone: true,
     title: "Bringing it together",
-    summary: "Lead the escalation huddle, test your recall in a quiz game, find the missing piece, and build your action plan.",
+    summary: "Lead the escalation huddle, make the calls for an executive review, find the missing piece, and build your action plan.",
     screens: [
       {
         title: V({ ops: "The cross-team crunch", sup: "The onboarding huddle" }),
         blocks: [
+          { type: "figure", src: "img/illustrations/capstone.svg", alt: "A team climbs rising steps toward a flag" },
           { type: "p", html: "Everything you've practiced comes together in one leadership huddle. Make a choice at each moment and see how it lands with the people in the room." },
           V({
             ops: { type: "sim", id: "mg5-sim", title: "The leadership huddle",
               setup: "The client has escalated: unapplied cash is rising and AR aging is up. Your Posting team and Nisha's AR team are blaming each other. Mara from Quality says the root cause is a payer remittance change she flagged last month. Leo says his team is exhausted. Your goal: a joint recovery plan the client can see by Friday. You call a leadership huddle.",
               steps: [
                 { label: "Open", context: "Everyone's on the call. What do you say first?", options: [
-                  { text: "“I need to know whose team caused this.”", correct: false, feedback: "Everyone starts defending their own team, and the root cause gets lost." },
-                  { text: "“The client sees one account, not two teams. Let's find the root cause and agree a joint plan by Friday.”", correct: true, feedback: "You framed a shared goal. People lean in instead of digging in." },
-                  { text: "“Nisha, your aging is up. What are you doing about it?”", correct: false, feedback: "Singling out a peer in front of others guarantees defensiveness." } ] },
+                  { text: "“Let's go team by team, starting with what each of you has found.”", correct: false, feedback: "Sounds fair, but a round-robin turns into each team defending its own numbers." },
+                  { text: "“Before causes, let's agree what the client must see by Friday.”", correct: true, feedback: "You framed a shared goal first. People lean in instead of digging in." },
+                  { text: "“Nisha, your aging is up most. Talk us through what's happening.”", correct: false, feedback: "Singling out a peer in front of others guarantees defensiveness." } ] },
                 { label: "Nisha", context: "Nisha says: “My team's numbers were fine until Posting fell behind.”", options: [
-                  { text: "“That's not accurate. Your team has issues too.”", correct: false, feedback: "Now it's a contest, and neither of you will back down." },
-                  { text: "Say nothing, to avoid conflict", correct: false, feedback: "Avoiding here lets the blame stand and stalls the plan." },
-                  { text: "“I hear you. Your team's numbers matter. What are you seeing on your side?”", correct: true, feedback: "Acknowledging and asking lowers the temperature. She shares that her queue has been flooded with unmatched payments." } ] },
+                  { text: "“Let's park who caused it and focus on the fix.”", correct: false, feedback: "Avoids the blame, but also skips her information. She shuts down, and you lose what AR knows." },
+                  { text: "“Fair. What changed on your side when it started?”", correct: true, feedback: "Acknowledging and asking lowers the temperature. She shares that her queue has been flooded with unmatched payments." },
+                  { text: "“Our data says otherwise, but let's look at it together.”", correct: false, feedback: "The invitation is good, but the first half starts a contest she now has to win." } ] },
                 { label: "Quality", context: "Mara says: “I flagged this remittance change last month, and nobody listened.”", options: [
-                  { text: "“You're right, we missed it. Walk us through the data. What should we fix first?”", correct: true, feedback: "Owning it earns her trust, and her data points straight to the fix." },
-                  { text: "“Let's focus on now, not last month.”", correct: false, feedback: "You've just repeated what happened last month: she wasn't heard." },
-                  { text: "“Can you send it by email after the call?”", correct: false, feedback: "You'll get the data, but you miss the chance to show she was heard." } ] },
+                  { text: "“Let's understand why the flag didn't reach us.”", correct: false, feedback: "A fair question for later. Right now it sounds like process-talk, and she still hasn't been heard." },
+                  { text: "“Thanks. Can you send the analysis after this call?”", correct: false, feedback: "Polite, but it repeats last month: her insight goes into an inbox instead of the room." },
+                  { text: "“You're right, we missed it. What should we fix first?”", correct: true, feedback: "Owning it earns her trust, and her data points straight to the fix." } ] },
                 { label: "Leo", context: "Leo says his team is exhausted.", options: [
-                  { text: "“We all are. We need one more push.”", correct: false, feedback: "His team hears that their wellbeing doesn't count." },
-                  { text: "Promise an incentive, without changing the workload", correct: false, feedback: "Appreciated, but the team is still exhausted." },
-                  { text: "Agree priorities, pause non-urgent work, and ask Nisha for an SME for two days", correct: true, feedback: "Support plus a specific ask. Your network shares the load." } ] },
+                  { text: "Approve overtime this week and check in with Leo on Friday", correct: false, feedback: "Overtime adds hours to people who are already tired. Quality usually drops first." },
+                  { text: "Pause the clean-up project and borrow an SME from Nisha", correct: true, feedback: "Removes work and adds help. Your network shares the load." },
+                  { text: "Bring in two people from your other site for the week", correct: false, feedback: "Adds hands, but they don't know this client's payers. Expect rework that lands on Leo's team." } ] },
                 { label: "Close", context: "How do you close the huddle?", options: [
-                  { text: "Summarize the plan, owners, and dates; agree to present it to the client together; thank each person for what they brought.", correct: true, feedback: "One plan, shared credit, and everyone leaves knowing their contribution mattered." },
-                  { text: "“I'll update the client myself.”", correct: false, feedback: "The client gets an update, but your peers feel cut out." },
-                  { text: "End the call to save time", correct: false, feedback: "No clear plan, no recognition. The blame will be back next week." } ] }
+                  { text: "Update the client yourself, to keep one clear voice", correct: false, feedback: "One voice sounds sensible, but your peers feel cut out and stop owning the plan." },
+                  { text: "Summarize the plan by email tonight so nothing is lost", correct: false, feedback: "Useful, but the moment to agree owners and thank people has passed." },
+                  { text: "Agree owners, then present to the client together", correct: true, feedback: "One plan, shared credit, and everyone leaves knowing their contribution mattered." } ] }
               ],
               key: [
                 "No single leader could have solved this. The plan came from everyone, including the people who started out defensive.",
@@ -373,25 +326,25 @@
               setup: "The Operations Director has escalated: 30 new hires sat idle for two days. Carmela's HR team and your team are blaming each other. Paul from Training says he flagged the start-date timing problem a month ago. Chris says his team is exhausted. The next wave of 60 starts in two weeks. Your goal: one joint onboarding plan the Operations Director can see by Friday. You call a leadership huddle.",
               steps: [
                 { label: "Open", context: "Everyone's on the call. What do you say first?", options: [
-                  { text: "“Carmela, HR's lists were late again. What are you doing about it?”", correct: false, feedback: "Singling out a peer in front of others guarantees defensiveness." },
-                  { text: "“Operations sees one onboarding process, not three teams. Let's find the root cause and agree one plan by Friday.”", correct: true, feedback: "You framed a shared goal. People lean in instead of digging in." },
-                  { text: "“I need to know whose team caused this.”", correct: false, feedback: "Everyone starts defending their own team, and the root cause gets lost." } ] },
+                  { text: "“Carmela, HR's lists were late most. Talk us through what happened.”", correct: false, feedback: "Singling out a peer in front of others guarantees defensiveness." },
+                  { text: "“Let's go team by team, starting with what each of you has found.”", correct: false, feedback: "Sounds fair, but a round-robin turns into each team defending its own numbers." },
+                  { text: "“Before causes, let's agree what Operations must see by Friday.”", correct: true, feedback: "You framed a shared goal first. People lean in instead of digging in." } ] },
                 { label: "Carmela", context: "Carmela says: “My team's lists were fine until IT started rejecting them.”", options: [
-                  { text: "“I hear you. Your team's work matters here. What are you seeing on your side?”", correct: true, feedback: "Acknowledging and asking lowers the temperature. She shares that Operations keeps changing start dates after the list is sent." },
-                  { text: "“That's not accurate. Your lists had missing IDs.”", correct: false, feedback: "Now it's a contest, and neither of you will back down." },
-                  { text: "Say nothing, to avoid conflict", correct: false, feedback: "Avoiding here lets the blame stand and stalls the plan." } ] },
+                  { text: "“Fair. What changed on your side when it started?”", correct: true, feedback: "Acknowledging and asking lowers the temperature. She shares that Operations keeps changing start dates after the list is sent." },
+                  { text: "“Let's park who caused it and focus on the fix.”", correct: false, feedback: "Avoids the blame, but also skips her information. She shuts down, and you lose what HR knows." },
+                  { text: "“Our tickets say otherwise, but let's look together.”", correct: false, feedback: "The invitation is good, but the first half starts a contest she now has to win." } ] },
                 { label: "Training", context: "Paul says: “I flagged this timing problem a month ago, and nobody listened.”", options: [
-                  { text: "“Let's focus on now, not last month.”", correct: false, feedback: "You've just repeated what happened last month: he wasn't heard." },
-                  { text: "“Can you email it after the call?”", correct: false, feedback: "You'll get the data, but you miss the chance to show he was heard." },
-                  { text: "“You're right, we missed it. Walk us through it. What should we fix first?”", correct: true, feedback: "Owning it earns his trust. His data shows start dates moving within 48 hours of day one, which is the real root cause." } ] },
+                  { text: "“You're right, we missed it. What should we fix first?”", correct: true, feedback: "Owning it earns his trust. His data shows start dates moving within 48 hours of day one: the real root cause." },
+                  { text: "“Let's understand why the flag didn't reach us.”", correct: false, feedback: "A fair question for later. Right now it sounds like process-talk, and he still hasn't been heard." },
+                  { text: "“Thanks. Can you send the analysis after this call?”", correct: false, feedback: "Polite, but it repeats last month: his insight goes into an inbox instead of the room." } ] },
                 { label: "Chris", context: "Chris says his team is exhausted.", options: [
-                  { text: "Agree priorities, pause non-urgent tickets, and ask Ken in WFM to send start-date changes daily so the team stops reworking", correct: true, feedback: "Support plus a specific ask. Your network removes the cause of the rework." },
-                  { text: "“We all are. We need one more push.”", correct: false, feedback: "His team hears that their wellbeing doesn't count." },
-                  { text: "Promise a team lunch, without changing the workload", correct: false, feedback: "Appreciated, but the team is still exhausted." } ] },
+                  { text: "Approve overtime this week and check in with Chris on Friday", correct: false, feedback: "Overtime adds hours to people who are already tired. Errors usually rise first." },
+                  { text: "Bring in two people from the general service desk", correct: false, feedback: "Adds hands, but they don't know the new client's access profiles. Expect rework that lands on Chris's team." },
+                  { text: "Ask WFM for daily date changes so the rework stops", correct: true, feedback: "Removes the cause of the rework instead of adding hours. Your network shares the load." } ] },
                 { label: "Close", context: "How do you close the huddle?", options: [
-                  { text: "“I'll update the Operations Director myself.”", correct: false, feedback: "The Director gets an update, but your peers feel cut out." },
-                  { text: "End the call to save time", correct: false, feedback: "No clear plan, no recognition. The blame will be back next week." },
-                  { text: "Summarize the plan, owners, and dates; agree to present it to the Operations Director together; thank each person for what they brought.", correct: true, feedback: "One plan, shared credit, and everyone leaves knowing their contribution mattered." } ] }
+                  { text: "Agree owners, then present to Operations together", correct: true, feedback: "One plan, shared credit, and everyone leaves knowing their contribution mattered." },
+                  { text: "Update the Operations Director yourself, as one clear voice", correct: false, feedback: "One voice sounds sensible, but your peers feel cut out and stop owning the plan." },
+                  { text: "Summarize the plan by email tonight so nothing is lost", correct: false, feedback: "Useful, but the moment to agree owners and thank people has passed." } ] }
               ],
               key: [
                 "No single leader could have solved this. The plan came from everyone, including the people who started out defensive.",
@@ -401,28 +354,10 @@
         ]
       },
       {
-        title: "Review game",
+        title: "Executive review",
         blocks: [
-          { type: "p", html: "Pick any tile. Higher values are harder. Clear the board to finish; there's no penalty for a wrong answer." },
-          { type: "jeopardy", id: "mg5-game", title: "Collaboration quiz board",
-            cats: [
-              { name: "Safe to speak", clues: [
-                { v: 100, q: "What's the best way to make it safe for TLs to bring you bad news?", options: ["Ask why they didn't tell you sooner", "Thank them for raising it, then solve it together", "Note it for their review"], answer: 1, explain: "Thanking people for bad news is how you get it early." },
-                { v: 200, q: "In a leadership review, why ask for your TLs' views before giving yours?", options: ["It saves time", "It avoids conflict", "Your title makes people wait for your view, then echo it"], answer: 2, explain: "Asking first gets you their real view, not a copy of yours." },
-                { v: 300, q: "Two teams keep blaming each other. Which fix is most likely to last?", options: ["A shared goal with a short weekly joint review", "Escalate each dispute", "Separate KPIs for each team"], answer: 0, explain: "A shared goal plus a routine turns blame into joint problem-solving." } ] },
-              { name: "Conflict", clues: [
-                { v: 100, q: V({ ops: "A TL is bypassing a compliance control to hit targets. Which mode fits?", sup: "A TL is skipping access approvals to hit SLA. Which mode fits?" }), options: ["Compromising", "Competing", "Avoiding"], answer: 1, explain: "Non-negotiables call for standing firm, and explaining why." },
-                { v: 200, q: "In DIAL, what does Describe mean?", options: ["State the facts, not labels", "Describe how you feel", "Describe the consequences"], answer: 0, explain: "Specific facts keep the conversation about the work." },
-                { v: 300, q: V({ ops: "Quality wants a calibration slot that's inconvenient for you but works for three other teams. Which mode fits?", sup: "Training wants a test window that's inconvenient for you but works for three other teams. Which mode fits?" }), options: ["Competing", "Avoiding", "Accommodating"], answer: 2, explain: "The bigger picture wins, and you build goodwill you may need later." } ] },
-              { name: "Helping", clues: [
-                { v: 100, q: "Which offer to a peer is most likely to be accepted?", options: ["“Shout if you need anything.”", V({ ops: "“I can lend two SMEs on Thursday afternoon for your top payer backlog.”", sup: "“Chris can join your list review on Thursday to flag access issues early.”" }), "“Let's discuss at the next leadership meeting.”"], answer: 1, explain: "Specific offers name what, how much, and when." },
-                { v: 200, q: "Your TLs are struggling with a problem a peer may have solved. When should you ask peers?", options: ["As soon as the trend appears", "Only once it reaches the client or customer", "Never; it reflects badly on you"], answer: 0, explain: "Asking early is a strength. Silence just slows everyone down." },
-                { v: 300, q: "What does winning as a leadership team look like?", options: ["Each Manager protects their own scorecard", "The strongest process carries the others", "Peers share capacity, knowledge, and credit"], answer: 2, explain: "The client or customer experiences one service, so leaders have to act like one team." } ] },
-              { name: "Networks", clues: [
-                { v: 100, q: V({ ops: "Client stakeholders and Tower Leads belong to which network?", sup: "Operations Directors and senior leaders belong to which network?" }), options: ["Operational", "Developmental", "Strategic"], answer: 2, explain: "They help you see what's coming." },
-                { v: 200, q: V({ ops: "Your HR business partner mainly belongs to which network?", sup: "Your WFM analyst mainly belongs to which network?" }), options: ["Operational", "Developmental", "Strategic"], answer: 0, explain: "Operational contacts help you deliver today." },
-                { v: 300, q: "As leaders move up, which network usually needs the most deliberate effort?", options: ["Operational", "Strategic", "Developmental"], answer: 1, explain: "Strategic relationships don't grow from daily work. You have to schedule them." } ] }
-            ] }
+          { type: "p", html: "The huddle produced a plan. Now you have to tell the story upward and outward, using the numbers." },
+          window.CT_CASES.review
         ]
       },
       {
@@ -431,7 +366,7 @@
           { type: "puzzle", caption: "A leadership team with a piece missing isn't complete." },
           { type: "p", html: "Remember the missing line at the start? The story jumped from blame to a joint plan because someone's contribution was gone." },
           { type: "p", html: V({ ops: "Think about the huddle you just led: the plan only came together because each leader brought something. Your teams, your peers, and your client need what only you bring: your style, your experience, and your connections. When you hold back or work in a silo, the account is incomplete.", sup: "Think about the huddle you just led: the plan only came together because each leader brought something. Your teams, your peers, and your internal customers need what only you bring: your style, your experience, and your connections. When you hold back or work in a silo, the service is incomplete." }) },
-          { type: "p", html: "<strong>That piece is you. And the leaders around you need to hear that they matter too.</strong>" },
+          { type: "media", src: "img/photos/thumbs-up.webp", shape: "circle", alt: "A row of hands giving a thumbs-up", html: "<strong>That piece is you. And the leaders around you need to hear that they matter too.</strong>" },
           { type: "appreciate", id: "mg5-appr", title: "Say it to someone",
             prompt: "Write a short message to one TL or peer. Then send it today, in your own words.",
             label: "Your message, for example: “[Name], our leadership team is better because you…”" }

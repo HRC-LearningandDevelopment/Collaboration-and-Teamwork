@@ -20,10 +20,10 @@ window.COURSE = {
     lead: "Every team is a puzzle, and every person is a piece. Learn how to build a team where people speak up, handle conflict well, help each other hit shared goals, and reach beyond their own walls, starting with you.",
     steps: [
       "<strong>Part 1: the foundation.</strong> Why every contribution matters, and what kind of team player you are. About 20 minutes.",
-      "<strong>Part 2: your path.</strong> {path}: four skills (psychological safety, conflict, mutual support, and networks), then a capstone scenario, a review game, and your action plan. About 55 minutes.",
+      "<strong>Part 2: your path.</strong> {path}: four skills (psychological safety, conflict, mutual support, and networks), then a capstone and your action plan. About 55 minutes.",
       "<strong>Wrap-up.</strong> A 10-question final check (80% to pass), your certificate, and a PDF of everything you wrote. About 5 minutes."
     ],
-    note: "Activities include branching scenarios, drag-and-drop, connect-the-dots, a word search, a crossword, and a quiz game. Write your answers in your own words: copy and paste are turned off in this course."
+    note: "Activities are built for your level: branching scenarios and hands-on games for ATLs and TLs, and case studies with real trade-offs for AMs and Managers. Write your answers in your own words: copy and paste are turned off in this course."
   },
 
   roles: {

@@ -23,6 +23,7 @@ sed -i 's/?v=1"/?v=2"/g' index.html
 | --- | --- |
 | `index.html` | Page shell and asset tags |
 | `js/config.js` | Storage key (no videos in this course) |
+| `js/content-cases.js` | Manager case studies (AM/Manager path only), with scored decisions |
 | `js/content-core.js` | Titles, welcome text, roles, functions, the four profile scenarios and casts, and shared pieces (crossword, concept cards) |
 | `js/content-foundation.js` | Part 1 (all profiles): Every piece matters; What kind of team player are you? |
 | `js/content-tl.js` | Stronger Together path (ATLs and TLs) |
@@ -31,6 +32,8 @@ sed -i 's/?v=1"/?v=2"/g' index.html
 | `js/app.js` | Course engine: navigation, activity types, progress, timer, certificate, PDF |
 | `css/styles.css` | Brand styles; additions for this course are at the end of the file |
 | `fonts/`, `img/`, `vendor/` | Proxima Nova, HealthRecon Connect logos and hero artwork, PDF library |
+| `img/photos/` | Six photos supplied by L&D (WebP), shown beside key text: thinking (self-assessment), video call (collaborative environment), frustrated (DIAL), helping (support), handshake (networks), thumbs-up (the missing piece). Confirm the image licences allow use on a public site. |
+| `img/illustrations/` | Eight custom SVG illustrations (one banner per module, plus the final check), in the brand palette with subtle built-in animation |
 
 ## Course structure and tailoring
 
@@ -47,9 +50,15 @@ On the welcome screen, learners choose their **role** (ATL or Team Leader / AM o
 - **Part 2: your path.** Four skill modules (psychological safety, conflict, mutual support, networks) and a capstone: branching scenario, quiz-board review game, the missing piece, and an action plan built from the learner's own answers.
 - **Wrap-up.** 10-question final check (80% to pass, retakes allowed), certificate (PNG), and a PDF of every answer, including the action plan.
 
-### Activity types
+### Activity types by role
 
-Branching scenario (`sim`), drag-and-drop sort (`bucket`), drag to rearrange (`sequence`), connect the dots (`match`), scavenger hunt (`hotspot`), flip cards (`flip`), collapse and expand (`accordion`), crossword (`crossword`), word search (`wordsearch`), quiz-board game (`jeopardy`), self-assessment (`styleassess`), rewrite with model answer (`rewrite`), network map (`netmap`), story warm-up (`story`), recognition message (`appreciate`), and action plan (`plan`).
+- **ATLs and TLs:** hands-on activities, including word search, crossword, sorting, connect-the-dots, and a quiz-board game.
+- **AMs and Managers:** six case studies replace the games. Each case has a brief, exhibits (timelines, scorecards, memos), and 2 to 4 decisions. Every option is scored (strongest call, defensible with a cost, weak) and every option's reasoning is shown after the learner commits, plus a decision-quality score.
+
+Writing rule for all choice questions: every option is plausible, options are similar in length, the correct answer is not the longest, and its position varies. Case options are shuffled for each learner.
+
+
+Branching scenario (`sim`), drag-and-drop sort (`bucket`), drag to rearrange (`sequence`), connect the dots (`match`), scavenger hunt (`hotspot`), flip cards (`flip`), collapse and expand (`accordion`), crossword (`crossword`), word search (`wordsearch`), quiz-board game (`jeopardy`), case study (`case`), self-assessment (`styleassess`), rewrite with model answer (`rewrite`), network map (`netmap`), story warm-up (`story`), recognition message (`appreciate`), and action plan (`plan`).
 
 The self-assessment shows options in a random order for each learner and states that no option is better than another, so learners answer honestly rather than picking the "ideal" answer.
 

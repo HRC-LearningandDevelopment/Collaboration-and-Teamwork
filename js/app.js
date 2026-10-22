@@ -7,7 +7,7 @@
   "use strict";
   const C = window.COURSE, CFG = window.COURSE_CONFIG;
   const KEY = CFG.storageKey;
-  const INTERACTIVE = new Set(["form", "reflect", "bucket", "sequence", "match", "flip", "hotspot", "sim", "profiles", "quiz", "video", "rewrite", "heatmap", "crossword", "wordsearch", "jeopardy", "story", "styleassess", "netmap", "appreciate", "plan"]);
+  const INTERACTIVE = new Set(["form", "reflect", "bucket", "sequence", "match", "flip", "hotspot", "sim", "profiles", "quiz", "video", "rewrite", "heatmap", "crossword", "wordsearch", "jeopardy", "case", "story", "styleassess", "netmap", "appreciate", "plan"]);
   const PAIR_COLORS = ["#1270A0", "#157A72", "#7A4BB5", "#C2410C", "#2F5D8A", "#A3366B"];
 
   /* ---------------- State ---------------- */
@@ -131,13 +131,24 @@
 
   /* ---------------- Routing ---------------- */
   function parseHash() {
-    const p = (location.hash || "").replace(/^#\/?/, "").split("/");
+    const p = (NAV.hash || "").replace(/^#\/?/, "").split("/");
     if (p[0] === "m" && modById(p[1])) return { page: "module", mod: p[1], screen: Math.max(0, parseInt(p[2] || "0", 10) || 0) };
     if (p[0] === "path") return { page: "welcome" };
     if (["welcome", "final", "cert"].includes(p[0])) return { page: p[0] };
     return null;
   }
-  function go(hash) { if (location.hash === hash) render(); else location.hash = hash; }
+  // Router: uses the URL hash when it can; falls back to in-memory routing inside
+  // sandboxed previews and embeds (about:srcdoc, blob:, data:) where the hash can't be used.
+  const NAV = (function () {
+    let mem = "", useHash = true;
+    try { useHash = !/^(about|blob|data):/.test(location.href); } catch (e) { useHash = false; }
+    return {
+      get hash() { return useHash ? location.hash : mem; },
+      set(h) { if (useHash) { try { location.hash = h; return; } catch (e) { useHash = false; } } mem = h; setTimeout(render, 0); },
+      replace(h) { if (useHash) { try { location.replace(h); return; } catch (e) { useHash = false; } } mem = h; setTimeout(render, 0); }
+    };
+  })();
+  function go(hash) { if (NAV.hash === hash) render(); else NAV.set(hash); }
   window.addEventListener("hashchange", render);
 
   // Ordered list of nav pages used by Continue
@@ -196,7 +207,7 @@
   }
   function resetAll() {
     if (!confirm("Erase all progress, answers, and reflections saved in this browser? This can't be undone.")) return;
-    localStorage.removeItem(KEY); S = blank(); location.hash = "#/welcome"; render();
+    try { localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } S = blank(); go("#/welcome");
   }
 
   /* ---------------- Main render ---------------- */
@@ -204,18 +215,18 @@
   let flash = "";
   function render() {
     let route = parseHash();
-    if (!route) { location.replace(S.last && S.last !== location.hash ? S.last : "#/welcome"); return; }
+    if (!route) { NAV.replace(S.last && S.last !== NAV.hash ? S.last : "#/welcome"); return; }
     if (route.page === "module") {
       const m = modById(route.mod);
       if (!hasProfile() || (m.track !== "all" && m.track !== S.role)) {
         flash = !hasProfile() ? "Choose your role and function first, so the course can be built for you."
           : "“" + T(m.title) + "” is part of " + pathName(m.track) + ", the path for " + C.roles[m.track].plural + ". You're on " + pathName(S.role) + "; change your role below to open it.";
-        location.replace("#/welcome"); return; }
+        NAV.replace("#/welcome"); return; }
       route.screen = Math.min(route.screen, m.screens.length - 1);
       const ms = S.mods[m.id] || (S.mods[m.id] = { screen: 0 });
       ms.screen = Math.max(ms.screen || 0, route.screen);
     }
-    S.last = location.hash; save();
+    S.last = NAV.hash; save();
     renderNav(route);
     const card = $("#card"); card.innerHTML = "";
     const pages = { welcome: pageWelcome, module: pageModule, final: pageFinal, cert: pageCert };
@@ -255,7 +266,7 @@
     if (flash) { body.append(msg("bad", esc(flash))); flash = ""; }
     body.append(
       h("p", { class: "lead" }, C.welcome.lead),
-      h("p", { html: "This course builds itself around <strong>your role and your function</strong>. Every scenario, example, and decision you practice reflects the work you actually do. Your progress saves automatically in this browser, so you can stop and come back at any time." }));
+      h("p", { class: "intro-note", html: "This course builds itself around <strong>your role and your function</strong>. Every scenario, example, and decision you practice reflects the work you actually do. Your progress saves automatically in this browser, so you can stop and come back at any time." }));
 
     // Name
     const nameMsg = h("div", { id: "name-msg" });
@@ -280,7 +291,7 @@
       h("h2", { id: "profile-h" }, "Build your course"),
       h("p", { class: "step-label" }, h("span", { class: "num" }, "1"), "Your role"),
       h("div", { class: "paths", role: "group", "aria-label": "Your role" },
-        Object.entries(C.roles).map(([id, r]) => choice("role", id, r.name, r.label, (r.path ? r.path + " \u00b7 " : "") + roleMods(id) + " path modules after the shared foundation"))),
+        Object.entries(C.roles).map(([id, r]) => choice("role", id, r.name, r.label, (r.path ? r.path + " \u00b7 " : "") + roleMods(id) + " modules"))),
       h("p", { class: "step-label" }, h("span", { class: "num" }, "2"), "Your function"),
       h("div", { class: "paths", role: "group", "aria-label": "Your function" },
         Object.entries(C.functions).map(([id, f]) => choice("fn", id, f.name, f.label))),
@@ -288,7 +299,7 @@
 
     if (hasProfile()) {
       body.append(h("p", { class: "preview-label" }, "Here's the story you'll lead through the whole course:"), briefingEl(true),
-        h("p", { class: "muted", style: "font-size:15px;margin-top:12px" }, "You can change your profile at any time from the menu. Your work for each profile is saved separately."));
+        h("p", { class: "muted", style: "font-size:var(--fs-small);margin-top:12px" }, "You can change your profile at any time from the menu. Your work for each profile is saved separately."));
     }
 
     body.append(h("h2", null, "How it works"),
@@ -329,9 +340,12 @@
     card.append(hd);
 
     const body = h("div", { class: "body" });
+    const list = blocksOf(scr);
+    const lead = idx === 0 ? list.filter((x) => x.b.type === "figure") : []; // module banner sits above the intro
+    lead.forEach((x) => body.append(renderBlock(x, () => onBlockChange(m))));
     if (idx === 0) body.append(h("p", { class: "lead" }, T(m.summary)));
     body.append(h("h2", null, T(scr.title)));
-    for (const x of blocksOf(scr)) body.append(renderBlock(x, () => onBlockChange(m)));
+    for (const x of list) if (!lead.includes(x)) body.append(renderBlock(x, () => onBlockChange(m)));
 
     const gate = h("div", { class: "gate-msg" });
     const isLast = idx === m.screens.length - 1;
@@ -370,6 +384,8 @@
       case "announce": return h("blockquote", { class: "announce", html: b.html });
       case "list": return h("ul", { class: "prose" }, b.items.map((i) => h("li", { html: i })));
       case "callout": return h("aside", { class: "callout " + (b.tone || "") }, h("h3", null, b.title), h("p", { html: b.html }));
+      case "figure": return h("figure", { class: "illus" }, h("img", { src: b.src, alt: b.alt || "", width: 880, height: 330, decoding: "async" }));
+      case "media": return h("div", { class: "media " + (b.shape || "circle") }, h("div", { class: "media-text" }, h("p", { html: b.html })), h("figure", { class: "media-img" }, h("img", { src: b.src, alt: b.alt || "", loading: "lazy", decoding: "async" })));
       case "concepts": return conceptsEl(b);
       case "accordion": return accordionEl(b);
       case "puzzle": return puzzleEl(b);
@@ -524,7 +540,7 @@
       }
       const left = st.order.filter((id) => !st.place[id]).length;
       sh.inner.append(
-        h("p", { class: "muted", style: "font-size:15px;margin:0 0 10px" }, st.done ? "All items sorted correctly." :
+        h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 10px" }, st.done ? "All items sorted correctly." :
           "Select an item, then select the group it belongs in. On a computer you can also drag items." + (selected ? " Item selected: choose a group." : "")),
         pool, grid);
       if (!st.done) sh.inner.append(h("div", { class: "act-actions" }, h("button", { class: "btn small", onclick: () => {
@@ -565,7 +581,7 @@
         if (!st.done) enableDrag(li, list);
         list.append(li);
       });
-      sh.inner.append(h("p", { class: "muted", style: "font-size:15px;margin:0 0 6px" }, st.done ? "Correct order." : "Use the arrows to reorder. On a computer you can also drag an item."), list);
+      sh.inner.append(h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 6px" }, st.done ? "Correct order." : "Use the arrows to reorder. On a computer you can also drag an item."), list);
       if (!st.done) sh.inner.append(h("div", { class: "act-actions" }, h("button", { class: "btn small", onclick: () => {
         st.attempts = (st.attempts || 0) + 1;
         marks = st.order.map((id, i) => id === correct[i]);
@@ -664,7 +680,7 @@
         h("div", { class: "match-col" }, h("h4", null, "Select one of these"), b.left.map((l) => item("L", l))),
         h("div", { class: "match-col" }, h("h4", null, "Then its match"), st.rorder.map((rid) => item("R", b.right.find((r) => r.id === rid)))));
       const nPaired = Object.keys(st.pairs).length;
-      sh.inner.append(h("p", { class: "muted", style: "font-size:15px;margin:0 0 12px" }, st.done ? "All pairs matched." :
+      sh.inner.append(h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 12px" }, st.done ? "All pairs matched." :
         (sel ? "Now select its match on the right." : "Select an item on the left, then its match on the right. Select a matched item on the right to undo it.") + " " + nPaired + " of " + b.left.length + " paired."), wrapEl);
       if (!st.done) sh.inner.append(h("div", { class: "act-actions" }, h("button", { class: "btn small", onclick: () => {
         out.innerHTML = "";
@@ -693,7 +709,7 @@
   R.flip = function (b, st, ctx) {
     const sh = shell(b, "Explore", st);
     st.seen = st.seen || [];
-    const count = h("p", { class: "muted", style: "font-size:15px;margin:0 0 12px" });
+    const count = h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 12px" });
     const upd = () => { count.textContent = st.done ? "All " + b.cards.length + " cards explored." : st.seen.length + " of " + b.cards.length + " explored. Select a card to flip it."; };
     const grid = h("div", { class: "flips" });
     b.cards.forEach((c, i) => {
@@ -776,7 +792,7 @@
       const s = steps[st.step], wrongs = st.wrong[st.step] || [];
       if (s.context) host.append(h("p", { style: "margin-bottom:6px" }, s.context));
       if (s.quote) host.append(h("p", { class: "sim-quote" }, s.quote));
-      if (s.prompt) host.append(h("p", { class: "sim-quote", style: "font-size:17px" }, s.prompt));
+      if (s.prompt) host.append(h("p", { class: "sim-quote", style: "font-size:var(--fs-body)" }, s.prompt));
       const fb = h("div", { "aria-live": "polite" });
       const opts2 = h("div", { class: "opts" });
       s.options.forEach((o, oi) => {
@@ -851,7 +867,7 @@
       });
     }
     const count = () => b.profiles.filter(isDone).length;
-    sh.inner.append(h("p", { class: "muted", style: "font-size:15px;margin:0 0 12px" }, "Select a team member. For each, pick the diagnosis, then the response. Work through all five."), grid, stage);
+    sh.inner.append(h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 12px" }, "Select a team member. For each, pick the diagnosis, then the response. Work through all five."), grid, stage);
     drawGrid(); drawStage(); void count;
     return sh.el;
   };
@@ -957,7 +973,7 @@
       const out = h("div");
       const ta = h("textarea", { rows: 3, "aria-label": "Your rewrite of: " + it.original }); ta.value = s.text || "";
       ta.addEventListener("input", () => { s.text = ta.value; ctx.save(); });
-      const showModel = () => out.append(h("div", { class: "model" }, h("b", null, "Model answer: "), it.model, h("br"), h("span", { class: "muted", style: "font-size:15px" }, "Why it works: " + it.why)));
+      const showModel = () => out.append(h("div", { class: "model" }, h("b", null, "Model answer: "), it.model, h("br"), h("span", { class: "muted", style: "font-size:var(--fs-small)" }, "Why it works: " + it.why)));
       const btn = h("button", { class: "btn small", onclick: () => {
         out.innerHTML = "";
         if (!ta.value.trim()) { out.append(msg("bad", "Write your version first, then compare it with the model.")); ta.focus(); return; }
@@ -984,7 +1000,7 @@
           onclick: () => { st.ratings[s.id] = v; ctx.save(); draw(); } }, v));
         sh.inner.append(h("div", { class: "heat-row" + (low && low.id === s.id ? " lowest" : "") }, h("span", { class: "lbl" }, s.label), rate));
       });
-      if (!low) { sh.inner.append(h("p", { class: "muted", style: "font-size:15px;margin-top:12px" }, "Rate all eight conditions (" + Object.keys(st.ratings).length + " of " + b.steps.length + " done) to reveal your weakest step.")); return; }
+      if (!low) { sh.inner.append(h("p", { class: "muted", style: "font-size:var(--fs-small);margin-top:12px" }, "Rate all eight conditions (" + Object.keys(st.ratings).length + " of " + b.steps.length + " done) to reveal your weakest step.")); return; }
       const out = h("div");
       const ev = h("textarea", { rows: 3, id: b.id + "-ev" }); ev.value = st.evidence || ""; ev.addEventListener("input", () => { st.evidence = ev.value; ctx.save(); });
       const ac = h("textarea", { rows: 3, id: b.id + "-ac" }); ac.value = st.action || ""; ac.addEventListener("input", () => { st.action = ac.value; ctx.save(); });
@@ -1062,7 +1078,7 @@
           h("p", { class: "sc-kicker" }, (top.length > 1 ? "Part of your blend" : "Your main style") + " · " + s.focus), h("h3", null, t),
           h("dl", null, h("dt", null, "You bring"), h("dd", null, s.bring), h("dt", null, "Watch for"), h("dd", null, s.watch), h("dt", null, "The team needs you to"), h("dd", null, s.need)));
           card.style.borderLeftColor = s.color; return card; }),
-        h("p", { class: "muted", style: "font-size:15.5px" }, b.after),
+        h("p", { class: "muted", style: "font-size:var(--fs-body)" }, b.after),
         h("div", { class: "act-actions" }, h("button", { class: "linkbtn", onclick: () => { st.answers = {}; st.counts = null; st.result = null; st.order = null; ctx.undo(); sh.hideDone(); const n2 = R.styleassess(b, st, ctx); sh.el.replaceWith(n2); } }, "Retake the self-assessment")));
     }
     if (b.intro) sh.inner.append(h("p", { class: "act-prompt" }, b.intro));
@@ -1211,7 +1227,7 @@
       const item = h("div", { class: "acc-item" }, btn, panel);
       wrap.append(item);
     });
-    return h("div", null, b.intro ? h("p", { class: "muted", style: "font-size:15px;margin:0 0 10px" }, b.intro) : null, wrap);
+    return h("div", null, b.intro ? h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 10px" }, b.intro) : null, wrap);
   }
 
   /* ---------- Crossword ---------- */
@@ -1319,7 +1335,7 @@
     board.append(svg, cellsEl);
     const list = h("ul", { class: "ws-list" });
     const note = h("div", { class: "ws-note", "aria-live": "polite" });
-    const count = h("p", { class: "muted", style: "font-size:15px;margin:0 0 10px" });
+    const count = h("p", { class: "muted", style: "font-size:var(--fs-small);margin:0 0 10px" });
     function capsule(r1, c1, r2, c2, cls) {
       const ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
       ln.setAttribute("x1", c1 + 0.5); ln.setAttribute("y1", r1 + 0.5); ln.setAttribute("x2", c2 + 0.5); ln.setAttribute("y2", r2 + 0.5); ln.setAttribute("class", cls);
@@ -1408,7 +1424,7 @@
         stage.append(msg("ok", "<strong>Board cleared.</strong> " + (pct >= 0.8 ? "Excellent recall. You're ready for the final check." : pct >= 0.5 ? "Solid. Review the explanations for the ones you missed before the final check." : "Worth a second look. Replay the board, or revisit the modules from the menu.")),
           h("div", { class: "act-actions" }, h("button", { class: "linkbtn", onclick: () => { st.played = {}; ctx.save(); scoreNum.textContent = "0"; board(); } }, "Replay the board")));
         st.best = Math.max(st.best || 0, Math.round(pct * 100)); ctx.save(); if (!st.done) { ctx.complete(); sh.showDone(); }
-      } else stage.append(h("p", { class: "muted", style: "font-size:15px;margin:12px 0 0" }, left + " of " + all.length + " clues left. Pick any tile."));
+      } else stage.append(h("p", { class: "muted", style: "font-size:var(--fs-small);margin:12px 0 0" }, left + " of " + all.length + " clues left. Pick any tile."));
     }
     function openClue(ci, qi) {
       const c = b.cats[ci], q = c.clues[qi], k = ci + "-" + qi;
@@ -1435,6 +1451,70 @@
     return sh.el;
   };
 
+  /* ---------- Case study with scored decisions ---------- */
+  // Each option carries a score: 2 = strongest call, 1 = defensible with a cost, 0 = weak.
+  // Options are shuffled per learner so position is never a cue.
+  const CASE_TAG = { 2: ["best", "Strongest call"], 1: ["mid", "Defensible, with a cost"], 0: ["weak", "Weak call"] };
+  function exhibitEl(x, i) {
+    const head = h("div", { class: "ex-head" }, h("span", { class: "ex-tag" }, "Exhibit " + String.fromCharCode(65 + i)), h("b", null, x.title));
+    let body;
+    if (x.kind === "table") body = h("div", { class: "table-wrap ex-table" }, h("table", null,
+      h("thead", null, h("tr", null, x.head.map((c) => h("th", { scope: "col" }, c)))),
+      h("tbody", null, x.rows.map((r) => h("tr", { class: r.flag ? "flag" : "" }, (r.cells || r).map((c) => h("td", { html: c })))))));
+    else if (x.kind === "timeline") body = h("ol", { class: "ex-timeline" }, x.items.map((it) => h("li", null, h("b", null, it.when), h("span", { html: it.text }))));
+    else body = h("div", { class: "ex-memo" }, x.from ? h("p", { class: "ex-from" }, x.from) : null, h("div", { html: x.html }));
+    return h("section", { class: "exhibit" }, head, body);
+  }
+  R.case = function (b, st, ctx) {
+    const sh = shell(b, "Case study", st);
+    st.ans = st.ans || {};
+    if (!st.order || st.order.length !== b.questions.length) { st.order = b.questions.map((q) => shuffle(q.options.map((_, i) => i), true)); ctx.save(); }
+    if (b.brief) sh.inner.append(h("div", { class: "case-brief", html: b.brief }));
+    (b.exhibits || []).forEach((x, i) => sh.inner.append(exhibitEl(x, i)));
+    const qwrap = h("div", { class: "decisions" });
+    sh.inner.append(qwrap);
+    function score() { return b.questions.reduce((a, q, i) => a + (st.ans[i] != null ? q.options[st.ans[i]].score : 0), 0); }
+    function draw(scrollTo) {
+      qwrap.innerHTML = "";
+      const nextOpen = b.questions.findIndex((_, i) => st.ans[i] == null);
+      const upto = nextOpen === -1 ? b.questions.length : nextOpen + 1;
+      for (let i = 0; i < upto; i++) {
+        const q = b.questions[i], locked = st.ans[i] != null;
+        const card = h("div", { class: "decision" + (locked ? " locked" : ""), id: b.id + "-q" + i });
+        card.append(h("p", { class: "dec-kicker" }, "Decision " + (i + 1) + " of " + b.questions.length), h("p", { class: "dec-q", html: q.q }));
+        let pick = null;
+        const opts = h("div", { class: "opts", role: locked ? null : "radiogroup" });
+        st.order[i].forEach((oi) => {
+          const o = q.options[oi];
+          if (locked) {
+            const tag = CASE_TAG[o.score];
+            opts.append(h("div", { class: "dec-opt " + tag[0] + (st.ans[i] === oi ? " chosen" : "") },
+              h("div", { class: "dec-row" }, h("span", { class: "dec-text" }, o.t), h("span", { class: "dec-tag" }, (st.ans[i] === oi ? "Your choice · " : "") + tag[1])),
+              h("p", { class: "dec-fb" }, o.fb)));
+          } else {
+            const btn = h("button", { class: "opt", type: "button", role: "radio", "aria-checked": "false" }, o.t);
+            btn.addEventListener("click", () => { pick = oi; opts.querySelectorAll(".opt").forEach((x) => { x.classList.remove("picked"); x.setAttribute("aria-checked", "false"); }); btn.classList.add("picked"); btn.setAttribute("aria-checked", "true"); lockBtn.disabled = false; });
+            opts.append(btn);
+          }
+        });
+        card.append(opts);
+        const lockBtn = h("button", { class: "btn small", disabled: true, onclick: () => { if (pick == null) return; st.ans[i] = pick; ctx.save(); draw(i); if (b.questions.every((_, k) => st.ans[k] != null) && !st.done) { ctx.complete(); sh.showDone(); } } }, "Lock in my decision");
+        if (!locked) card.append(h("div", { class: "act-actions" }, lockBtn, h("span", { class: "muted", style: "font-size:var(--fs-small)" }, "You'll see how every option plays out once you commit.")));
+        qwrap.append(card);
+      }
+      if (nextOpen === -1) {
+        const max = b.questions.length * 2, sc = score(), pct = sc / max;
+        const big = h("b", null, sc + "/" + max);
+        qwrap.append(h("div", { class: "case-score" }, h("div", null, h("small", null, "Decision quality"), big),
+          h("p", null, pct >= 0.85 ? "Sound judgment throughout. You weighed the trade-offs the way experienced leaders do." : pct >= 0.6 ? "Mostly sound. Review the decisions marked amber or red, and what each option would have cost." : "Worth a second pass. Read the reasoning on each option, then retake the case.")),
+          h("div", { class: "act-actions" }, h("button", { class: "linkbtn", onclick: () => { st.ans = {}; st.order = null; ctx.undo(); sh.hideDone(); const n = R.case(b, st, ctx); sh.el.replaceWith(n); } }, "Retake this case")));
+      }
+      if (scrollTo != null) { const el = document.getElementById(b.id + "-q" + Math.min(scrollTo + 1, b.questions.length - 1)); if (el && scrollTo + 1 < b.questions.length) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+    draw();
+    return sh.el;
+  };
+
   /* ---------------- Page: final check ---------------- */
   function pageFinal(card) {
     card.append(hero("Wrap-up", "Final check", null, true));
@@ -1443,13 +1523,14 @@
       body.append(h("p", { class: "lead" }, "The final check unlocks when you've completed Part 1 and every module in your path."));
       if (!hasProfile()) body.append(msg("info", "You haven't chosen your profile yet."), h("div", { class: "act-actions" }, h("button", { class: "btn", onclick: () => go("#/welcome") }, "Choose my profile")));
       else {
-        body.append(h("h2", { style: "font-size:21px" }, "Still to complete"),
+        body.append(h("h3", null, "Still to complete"),
           h("ul", { class: "modlist" }, pathMods().filter((m) => !modDone(m)).map((m) => h("li", null, markerEl(modPct(m)),
             h("div", { class: "grow" }, h("b", null, T(m.title)), h("small", null, Math.round(modPct(m) * 100) + "% complete")),
             h("button", { class: "btn small ghost", onclick: () => go("#/m/" + m.id + "/" + resumeScreen(m)) }, "Open")))));
       }
       card.append(body); return;
     }
+    body.append(h("figure", { class: "illus" }, h("img", { src: "img/illustrations/final-check.svg", alt: "A ticked checklist beside a badge marked 80 percent", width: 880, height: 330 })));
     const qs = finalQs();
     const F = Fin();
     body.append(h("p", { class: "lead" }, qs.length + " questions drawn from Part 1 and your " + profileLabel() + " path. You need " + C.finalCheck.passMark + "% to earn your certificate, and you can retake it."),
@@ -1628,7 +1709,7 @@
       space(8);
       if (y < M + 80) newPage();
       page.drawRectangle({ x: M, y: y - 4, width: 4, height: 18, color: TEAL });
-      text(T(m.title), { font: bold, size: 15, color: INK, indent: 12, gap: 2 });
+      text(titleCase(T(m.title)), { font: bold, size: 15, color: INK, indent: 12, gap: 2 });
       text(Math.round(modPct(m) * 100) + "% complete", { size: 9, color: MUT, indent: 12, gap: 8 });
       for (const scr of m.screens) for (const xb of blocksOf(scr)) {
         const b = xb.b;
@@ -1649,6 +1730,10 @@
           case "profiles": { const n = b.profiles.filter((p) => st.p && st.p[p.id] && st.p[p.id].done).length; head("Diagnosis activity: " + b.title); text(n + " of " + b.profiles.length + " team members diagnosed. " + status + ".", { indent: 10, gap: 6 }); break; }
           case "hotspot": head("Scavenger hunt: " + b.title); text(status + ". Found " + (st.found || []).length + " of " + b.find + (st.missed && st.missed.length ? ", with " + st.missed.length + " other item" + (st.missed.length > 1 ? "s" : "") + " examined." : "."), { indent: 10, gap: 6 }); break;
           case "story": head(b.title); ans(st.text); break;
+          case "case": { const mx = b.questions.length * 2; let sc = 0; head("Case study: " + b.title + (st.done ? "" : " (not finished)"));
+            b.questions.forEach((q, i) => { const a = (st.ans || {})[i]; if (a == null) return; const o = q.options[a]; sc += o.score;
+              text(clean(q.q), { font: bold, size: 9.5, color: MUT, indent: 10, gap: 0 }); text("My decision: " + o.t + " (" + CASE_TAG[o.score][1] + ")", { indent: 10, gap: 4 }); });
+            if (st.done) text("Decision quality: " + sc + " of " + mx + ".", { indent: 10, gap: 6 }); break; }
           case "crossword": head("Crossword: " + b.title); text(st.done ? "Solved" + (st.hints ? " with " + st.hints + " hint" + (st.hints > 1 ? "s" : "") : " with no hints") + "." : "Not yet solved.", { indent: 10, gap: 6 }); break;
           case "wordsearch": head("Word search: " + b.title); text("Found " + (st.found || []).length + " of " + b.words.length + " words. " + status + ".", { indent: 10, gap: 6 }); break;
           case "jeopardy": { const tot = b.cats.reduce((a, c) => a + c.clues.reduce((x, q) => x + q.v, 0), 0); let got = 0; b.cats.forEach((c, ci) => c.clues.forEach((q, qi) => { if ((st.played || {})[ci + "-" + qi] === "right") got += q.v; }));
@@ -1669,6 +1754,64 @@
     return doc.save();
   }
 
+  /* ---------------- Title Case for every title and label ---------------- */
+  // Minor words stay lowercase unless they start or end a title or follow a colon.
+  const TC_MINOR = new Set(["a", "an", "the", "and", "but", "or", "nor", "for", "so", "yet", "as", "at", "by", "if", "in", "of", "off", "on", "per", "to", "up", "via", "vs"]);
+  // Phrasal verbs keep their particle capitalized: "Lock In", "Check In", "Speak Up".
+  const TC_PARTICLE = new Set(["in", "on", "up", "off", "out"]);
+  const TC_VERB = new Set(["lock", "log", "check", "sign", "speak", "step", "follow", "back", "turn", "set", "show", "close", "fill", "pitch", "look", "find", "hand", "take", "bring", "give", "call", "sum", "write", "opt", "sort", "point", "rule", "join", "build", "carry", "work", "reach", "stand", "weigh"]);
+  function capWord(w) {
+    // Capitalize the first letter of each hyphen-separated part; leave existing capitals alone (ATL, SME, DIAL).
+    return w.split("-").map((p) => p.replace(/^([^A-Za-z0-9]*)([a-z])/, (m, pre, c) => pre + c.toUpperCase())).join("-");
+  }
+  function titleCase(str, opts) {
+    if (!str) return str;
+    const parts = String(str).split(/(\s+)/);
+    const words = parts.map((p, i) => (i % 2 === 0 ? p : null));
+    const idx = words.map((w, i) => (w && /[A-Za-z0-9]/.test(w) ? i : -1)).filter((i) => i >= 0);
+    let afterBreak = !(opts && opts.continues);
+    return parts.map((p, i) => {
+      if (i % 2 === 1 || !/[A-Za-z]/.test(p)) { if (/[:—·|]$/.test(p) || p === "·" || p === "|") afterBreak = true; return p; }
+      const bare = p.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9']+$/g, "");
+      const first = afterBreak || i === idx[0], last = i === idx[idx.length - 1] && !(opts && opts.open);
+      afterBreak = /[:—?!.]$/.test(p);
+      const prev = (words.slice(0, i).filter((w) => w && /[A-Za-z]/.test(w)).pop() || "").toLowerCase().replace(/[^a-z]/g, "");
+      if (!first && !last && TC_MINOR.has(bare) && !(TC_PARTICLE.has(bare) && TC_VERB.has(prev))) return p;
+      return capWord(p);
+    }).join("");
+  }
+  const TC_SEL = [
+    "h1", "h2", "h3", "h4", "th", ".hero-kicker", ".hero-sub", ".bars-label", ".sidebar-title",
+    ".nav-group-label", ".nav-item > span:not(.marker)", ".lock", ".sidebar-foot button", ".menu-btn", ".close-btn",
+    ".act-type", ".chip-done", ".btn", ".linkbtn", ".field-label", ".bucket-label", ".match-col h4",
+    ".concept b", ".concept small", ".acc-title", ".flip-front b", ".flip-front small", ".flip-hint",
+    ".sim-track em", ".brief-kicker", ".brief-cast-label", ".castcard small", ".path .meta", ".step-label",
+    ".preview-label", ".plan dt", ".cw-clues h4", ".jp-cat", ".jp-meta", ".jp-score > span", ".stat small", ".case-score small",
+    ".sa-name", ".sc-kicker", ".style-card dt", ".doc-head", ".tile small", ".modlist b", ".ex-head b", ".ex-tag",
+    ".dec-kicker", ".dec-tag", ".pcard b", ".pcard small", ".heat-row .lbl", ".compare-col h3"
+  ].join(",");
+  function tcElement(el) {
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n, firstDone = false;
+    while ((n = tw.nextNode())) {
+      if (!n.nodeValue.trim()) continue;
+      const v = titleCase(n.nodeValue, { continues: firstDone && !/^\s/.test(n.nodeValue) && false });
+      if (v !== n.nodeValue) n.nodeValue = v;
+      firstDone = true;
+    }
+  }
+  function applyTitleCase(root) {
+    if (!root || root.nodeType !== 1) return;
+    if (root.matches && root.matches(TC_SEL)) tcElement(root);
+    root.querySelectorAll(TC_SEL).forEach(tcElement);
+  }
+  new MutationObserver((muts) => {
+    for (const m of muts) m.addedNodes.forEach((nd) => {
+      if (nd.nodeType === 1) { applyTitleCase(nd); const host = nd.parentElement && nd.parentElement.closest(TC_SEL); if (host) tcElement(host); }
+      else if (nd.nodeType === 3 && nd.parentElement) { const host = nd.parentElement.closest(TC_SEL); if (host) tcElement(host); }
+    });
+  }).observe(document.documentElement, { childList: true, subtree: true });
+
   /* ---------------- Boot ---------------- */
   function boot() {
     const menu = $("#menu-btn"), backdrop = $("#backdrop");
@@ -1683,6 +1826,7 @@
     document.addEventListener("drop", (e) => { if (e.target.closest && e.target.closest("input, textarea")) { e.preventDefault(); toast("Type your answer in your own words."); } }, true);
     document.addEventListener("copy", block("Copying is turned off in this course."), true);
     document.addEventListener("cut", block("Copying is turned off in this course."), true);
+    applyTitleCase(document.body);
     render();
   }
   // Exposed for automated QA only.
